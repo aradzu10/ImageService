@@ -1,0 +1,2 @@
+C:\Users\user\Documents\Visual Studio 2015\Projects\לימודים\תכנות מתקדם 2\ImageService\ImageService\bin\Debug\ImageService.exe.config
+C:\Users\user\Source\Repos\ImageService\ImageService\bin\Debug\ImageService.exe.config
