@@ -40,6 +40,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -50,6 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FileHandler\ImageServiceFileHandler.cs" />
+    <Compile Include="FileHandler\IFileHandler.cs" />
+    <Compile Include="FileHandler\FileHandler.cs" />
     <Compile Include="ImageService.cs">
       <SubType>Component</SubType>
     </Compile>
