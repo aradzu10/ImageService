@@ -16,7 +16,7 @@ namespace ImageService.Modal
         /// <returns>Indication if the Addition Was Successful</returns>
         bool MoveFile(string from, string to);
 
-        void CreateDir(string path);
+        bool CreateDir(string path);
 
         Image CreateThumbnail(string imagePath, int size); // should return Image
 

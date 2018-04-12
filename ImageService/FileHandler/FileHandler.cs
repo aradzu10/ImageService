@@ -1,5 +1,4 @@
-﻿using ImageService.Infrastructure;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -12,16 +11,24 @@ using System.Threading.Tasks;
 
 namespace ImageService.Modal
 {
-    public class FileHandler : IFileHandler
+    public class FileHandler : IFileHandler // check - create error enums
     {
-        public bool CheckIfFileExist(string path)
+        public bool CheckIfFileExist(string path) // check - maybe useless
         {
             return File.Exists(path);
         }
 
-        public void CreateDir(string path)
+        public bool CreateDir(string path)
         {
-            Directory.CreateDirectory(path);
+            try
+            {
+                Directory.CreateDirectory(path);
+                return true;
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
         }
 
         public Image CreateThumbnail(string imagePath, int size)
