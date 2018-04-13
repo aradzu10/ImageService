@@ -8,6 +8,9 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
+using Logger.Message;
+using System.Configuration;
+using ImageService.ListenerManager;
 
 public enum ServiceState
 {
@@ -37,11 +40,14 @@ namespace ImageService
 {
     public partial class ImageService : ServiceBase
     {
+        private ImageListenerManager listenerManager;
+        private string[] folderToListen;
+
         public ImageService()
         {
             InitializeComponent();
-            string eventSourceName = "MySource";
-            string logName = "MyNewLog";
+            string eventSourceName = ConfigurationManager.AppSettings.Get("SourceName");
+            string logName = ConfigurationManager.AppSettings.Get("LogName");
             eventLog = new System.Diagnostics.EventLog();
             if (!System.Diagnostics.EventLog.SourceExists(eventSourceName))
             {
@@ -49,32 +55,52 @@ namespace ImageService
             }
             eventLog.Source = eventSourceName;
             eventLog.Log = logName;
+            string outputFolder = ConfigurationManager.AppSettings.Get("OutputDir");
+            int ThumbnailSize = Int32.Parse(ConfigurationManager.AppSettings.Get("ThumbnailSize"));
+            listenerManager = new ImageListenerManager(outputFolder, ThumbnailSize);
+            folderToListen = (ConfigurationManager.AppSettings.Get("Handler").Split(';'));
         }
 
         protected override void OnStart(string[] args)
         {
-            eventLog.WriteEntry("Service Start Pending.");
+            // check - log
             ServiceStatus serviceStatus = new ServiceStatus();
             serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING;
-            serviceStatus.dwWaitHint = 100000;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
-            // Set up a timer to trigger every minute.  
+
+            listenerManager.StartListenDir(folderToListen);
+
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
-            eventLog.WriteEntry("Service Started.");
+            // check - log
         }
 
         protected override void OnStop()
         {
-            eventLog.WriteEntry("Service Stoped.");
+            // check - log
+            listenerManager.StopListening();
         }
 
-        protected override void OnContinue()
+        public void WriteMessage(Object sender, MessageRecievedEventArgs e)
         {
-            eventLog.WriteEntry("Service Running.");
+            eventLog.WriteEntry(e.Message, GetType(e.Status));
         }
 
         [DllImport("advapi32.dll", SetLastError = true)]
         private static extern bool SetServiceStatus(IntPtr handle, ref ServiceStatus serviceStatus);
+
+        private EventLogEntryType GetType(MessageTypeEnum status)
+        {
+            switch (status)
+            {
+                case MessageTypeEnum.FAIL:
+                    return EventLogEntryType.Error;
+                case MessageTypeEnum.WARNING:
+                    return EventLogEntryType.Warning;
+                case MessageTypeEnum.INFO:
+                default:
+                    return EventLogEntryType.Information;
+            }
+        }
     }
 }

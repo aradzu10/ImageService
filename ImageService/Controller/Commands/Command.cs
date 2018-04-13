@@ -4,12 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImageService.Logging.Modal
+namespace ImageService.Commands
 {
-    public enum MessageTypeEnum : int
+    public enum Command : int
     {
-        INFO,
-        WARNING,
-        FAIL
+        BackupFile
     }
 }

@@ -38,6 +38,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Configuration.Install" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -51,6 +52,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\Commands\ICommand.cs" />
+    <Compile Include="Controller\Commands\BackupImageCommand.cs" />
+    <Compile Include="Controller\IImageController.cs" />
+    <Compile Include="Controller\ImageController.cs" />
+    <Compile Include="Controller\Commands\Command.cs" />
+    <Compile Include="DirectoryListener\ImageDirectoryListener.cs" />
+    <Compile Include="DirectoryListener\IDirectoryListener.cs" />
+    <Compile Include="Enums\ExitCode.cs" />
     <Compile Include="FileHandler\ImageServiceFileHandler.cs" />
     <Compile Include="FileHandler\IFileHandler.cs" />
     <Compile Include="FileHandler\FileHandler.cs" />
@@ -60,6 +69,12 @@
     <Compile Include="ImageService.Designer.cs">
       <DependentUpon>ImageService.cs</DependentUpon>
     </Compile>
+    <Compile Include="ListenerManager\ImageListenerManager.cs" />
+    <Compile Include="Logger\ILoggingService.cs" />
+    <Compile Include="Logger\LoggingService.cs" />
+    <Compile Include="Logger\Message\MessageRecievedEventArgs.cs" />
+    <Compile Include="Logger\Message\MessageTypeEnum.cs" />
+    <Compile Include="MyLogger\Logger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>
@@ -70,7 +85,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
@@ -81,6 +98,7 @@
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

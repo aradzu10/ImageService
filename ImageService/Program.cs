@@ -1,4 +1,8 @@
-﻿using System;
+﻿using ImageService.Controller;
+using ImageService.DirectoryListener;
+using ImageService.FileHandler;
+using Logger;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceProcess;

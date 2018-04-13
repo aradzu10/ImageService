@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImageService.Enums;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -9,81 +10,113 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ImageService.Modal
+namespace ImageService.FileHandler
 {
-    public class FileHandler : IFileHandler // check - create error enums
+    public class FileHandler : IFileHandler
     {
-        public bool CheckIfFileExist(string path) // check - maybe useless
-        {
-            return File.Exists(path);
-        }
-
-        public bool CreateDir(string path)
+        public ExitCode CreateDir(string path)
         {
             try
             {
                 Directory.CreateDirectory(path);
-                return true;
+                return ExitCode.Success;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return false;
+                return ExitCode.Failed;
             }
         }
 
-        public Image CreateThumbnail(string imagePath, int size)
+        public Image CreateThumbnail(string imagePath, int size, out ExitCode status)
         {
-            throw new NotImplementedException();
+            Image thumb = null, image = null;
+            try
+            {
+                image = Image.FromFile(imagePath);
+                thumb = new Bitmap(image, size, size);
+                status = ExitCode.Success;
+                return thumb;
+            }
+            catch (Exception)
+            {
+                thumb?.Dispose();
+                status = ExitCode.Failed;
+                return null;
+            }
+            finally
+            {
+                image?.Dispose();
+            }
         }
 
-        public bool MoveFile(string from, string to)
+        public ExitCode MoveFile(string from, string to)
         {
             CreateDir(to);
+            int counter = 1;
             string filenameNoPath = Path.GetFileNameWithoutExtension(from);
-            string temppath = Path.GetDirectoryName(from);
             string extension = Path.GetExtension(from);
             string destPath = to + "\\" + filenameNoPath + extension;
-            int counter = 0;
 
             if (!File.Exists(from))
             {
-                return false;
+                return ExitCode.Invalid_Input;
             }
 
             try
             {
                 if (!File.Exists(destPath))
                 {
-                    File.WriteAllBytes(destPath, File.ReadAllBytes(from));
+                    File.Move(from, destPath);
                 }
                 else
                 {
                     do
                     {
                         counter++;
-                        destPath = to + "\\" + filenameNoPath + " (" + counter.ToString() + ")" + extension; // check - beginning with dot
+                        destPath = to + "\\" + filenameNoPath + " (" + counter.ToString() + ")" + extension; 
                     } while (File.Exists(destPath));
 
-                    File.WriteAllBytes(destPath, File.ReadAllBytes(from));
+                    File.Move(from, destPath);
                 }
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return false;
+                return ExitCode.Failed;
             }
-            return true;
+            return ExitCode.Success;
         }
 
-        public bool SaveImage(string path, Image image)
+        public ExitCode SaveImage(string path, Image image)
         {
+            int counter = 1;
+            string filenameNoPath = Path.GetFileNameWithoutExtension(path);
+            string temppath = Path.GetDirectoryName(path);
+            string extension = Path.GetExtension(path);
+
             try
             {
-                image.Save(path);
-                return true;
+                if (!File.Exists(path))
+                {
+                    image.Save(path);
+                }
+                else
+                {
+                    do
+                    {
+                        counter++;
+                        path = temppath + "\\" + filenameNoPath + " (" + counter.ToString() + ")" + extension;
+                    } while (File.Exists(path));
+                    image.Save(path);
+                }
+                return ExitCode.Success;
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return false;
+                return ExitCode.Failed;
+            }
+            finally
+            {
+                image?.Dispose();
             }
         }
     }

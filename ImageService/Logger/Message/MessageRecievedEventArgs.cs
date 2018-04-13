@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImageService.Logging.Modal
+namespace Logger.Message
 {
     public class MessageRecievedEventArgs : EventArgs
     {
-        private MessageTypeEnum Status { get; set; }
-        private string Message { get; set; }
+        public MessageTypeEnum Status { get; set; }
+        public string Message { get; set; }
 
         public MessageRecievedEventArgs(MessageTypeEnum messageType, string message)
         {

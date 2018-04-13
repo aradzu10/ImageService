@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
+using ImageService.Enums;
 
-namespace ImageService.Modal
+namespace ImageService.FileHandler
 {
     public interface IFileHandler
     {
@@ -14,14 +15,12 @@ namespace ImageService.Modal
         /// </summary>
         /// <param name="path">The Path of the Image from the file</param>
         /// <returns>Indication if the Addition Was Successful</returns>
-        bool MoveFile(string from, string to);
+        ExitCode MoveFile(string from, string to);
 
-        bool CreateDir(string path);
+        ExitCode CreateDir(string path);
 
-        Image CreateThumbnail(string imagePath, int size); // should return Image
+        Image CreateThumbnail(string imagePath, int size, out ExitCode status);
 
-        bool SaveImage(string path, Image image);
-
-        bool CheckIfFileExist(string path);
+        ExitCode SaveImage(string path, Image image);
     }
 }

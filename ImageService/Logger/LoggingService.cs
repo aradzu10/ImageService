@@ -1,12 +1,11 @@
-﻿
-using ImageService.Logging.Modal;
+﻿using Logger.Message;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImageService.Logging
+namespace Logger
 {
     public class LoggingService : ILoggingService
     {
