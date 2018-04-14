@@ -39,6 +39,9 @@ public struct ServiceStatus
 
 namespace ImageService
 {
+    /// <summary>
+    /// the service
+    /// </summary>
     public partial class ImageService : ServiceBase
     {
         private ImageListenerManager listenerManager;
@@ -71,6 +74,7 @@ namespace ImageService
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
             listenerManager.StartListenDir(folderToListen);
+            eventLog.WriteEntry("Service start running", GetType(MessageTypeEnum.INFO));
 
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
@@ -78,8 +82,15 @@ namespace ImageService
 
         protected override void OnStop()
         {
-            // check - log
+            ServiceStatus serviceStatus = new ServiceStatus();
+            serviceStatus.dwCurrentState = ServiceState.SERVICE_STOP_PENDING;
+            SetServiceStatus(this.ServiceHandle, ref serviceStatus);
+
             listenerManager.StopListening();
+            eventLog.WriteEntry("Service stoped", GetType(MessageTypeEnum.INFO));
+
+            serviceStatus.dwCurrentState = ServiceState.SERVICE_STOPPED;
+            SetServiceStatus(this.ServiceHandle, ref serviceStatus);
         }
 
         public void WriteMessage(Object sender, MessageRecievedEventArgs e)

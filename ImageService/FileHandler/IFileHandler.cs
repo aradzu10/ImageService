@@ -8,13 +8,11 @@ using ImageService.Enums;
 
 namespace ImageService.FileHandler
 {
+    /// <summary>
+    /// minimum file handler behaviors
+    /// </summary>
     public interface IFileHandler
     {
-        /// <summary>
-        /// The Function Addes A file to the system
-        /// </summary>
-        /// <param name="path">The Path of the Image from the file</param>
-        /// <returns>Indication if the Addition Was Successful</returns>
         ExitCode MoveFile(string from, string to);
 
         ExitCode CreateDir(string path);

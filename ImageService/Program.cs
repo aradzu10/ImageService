@@ -15,6 +15,7 @@ namespace ImageService
     {
         /// <summary>
         /// The main entry point for the application.
+        /// starts the service
         /// </summary>
         static void Main()
         {

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Logger
 {
+    /// <summary>
+    /// basic service logger behavior
+    /// </summary>
     public interface ILoggingService
     {
         event EventHandler<MessageRecievedEventArgs> MessageRecieved;

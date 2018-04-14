@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ImageService.Enums
 {
+    /// <summary>
+    /// all exit codes
+    /// </summary>
     public enum ExitCode : int
     {
         Failed,

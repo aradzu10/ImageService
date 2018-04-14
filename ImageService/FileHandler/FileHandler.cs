@@ -12,6 +12,10 @@ using System.Threading.Tasks;
 
 namespace ImageService.FileHandler
 {
+    /// <summary>
+    /// file handler
+    /// </summary>
+    /// everything here is really clear - so we didnt document it
     public class FileHandler : IFileHandler
     {
         public ExitCode CreateDir(string path)
