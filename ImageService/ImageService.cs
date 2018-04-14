@@ -73,8 +73,8 @@ namespace ImageService
             serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
-            listenerManager.StartListenDir(folderToListen);
             eventLog.WriteEntry("Service start running", GetType(MessageTypeEnum.INFO));
+            listenerManager.StartListenDir(folderToListen);
 
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
