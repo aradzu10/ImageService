@@ -70,10 +70,10 @@
       <DependentUpon>ImageService.cs</DependentUpon>
     </Compile>
     <Compile Include="ListenerManager\ImageListenerManager.cs" />
-    <Compile Include="Logger\ILoggingService.cs" />
-    <Compile Include="Logger\LoggingService.cs" />
-    <Compile Include="Logger\Message\MessageRecievedEventArgs.cs" />
-    <Compile Include="Logger\Message\MessageTypeEnum.cs" />
+    <Compile Include="ServiceLogger\ILoggingService.cs" />
+    <Compile Include="ServiceLogger\LoggingService.cs" />
+    <Compile Include="ServiceLogger\Message\MessageRecievedEventArgs.cs" />
+    <Compile Include="ServiceLogger\Message\MessageTypeEnum.cs" />
     <Compile Include="MyLogger\Logger.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs">

@@ -10,3 +10,9 @@ C:\Users\Matan\Source\Repos\ImageService\ImageService\bin\Debug\ImageService.pdb
 C:\Users\Matan\Source\Repos\ImageService\ImageService\bin\Debug\Bitbucket.dll
 C:\Users\Matan\Source\Repos\ImageService\ImageService\obj\Debug\ImageService.exe
 C:\Users\Matan\Source\Repos\ImageService\ImageService\obj\Debug\ImageService.pdb
+C:\Users\user\Documents\Visual Studio 2015\Projects\לימודים\תכנות מתקדם 2\ImageService\ImageService\obj\Debug\ImageService.exe
+C:\Users\user\Documents\Visual Studio 2015\Projects\לימודים\תכנות מתקדם 2\ImageService\ImageService\obj\Debug\ImageService.pdb
+C:\Users\user\Documents\Visual Studio 2015\Projects\לימודים\תכנות מתקדם 2\ImageService\ImageService\obj\Debug\ImageService.csprojResolveAssemblyReference.cache
+C:\Users\user\Documents\Visual Studio 2015\Projects\לימודים\תכנות מתקדם 2\ImageService\ImageService\obj\Debug\ImageService.ImageService.resources
+C:\Users\user\Documents\Visual Studio 2015\Projects\לימודים\תכנות מתקדם 2\ImageService\ImageService\obj\Debug\ImageService.ProjectInstaller.resources
+C:\Users\user\Documents\Visual Studio 2015\Projects\לימודים\תכנות מתקדם 2\ImageService\ImageService\obj\Debug\ImageService.csproj.GenerateResource.Cache

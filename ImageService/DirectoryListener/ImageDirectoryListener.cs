@@ -17,7 +17,7 @@ namespace ImageService.DirectoryListener
         private ILoggingService logger;
         private FileSystemWatcher dirListener;
         private string dirPath;
-        private readonly string[] filters = { ".jpg", ".png", ".gif", ".bmp" };
+        private readonly string[] filters = { ".jpg", ".png", ".gif", ".bmp", ".jepg" };
 
         public ImageDirectoryListener(IImageController controller_, ILoggingService logger_)
         {
@@ -28,6 +28,7 @@ namespace ImageService.DirectoryListener
 
         public void StartListenDirectory(string dirPath_)
         {
+            logger.Log("Add folder: " + dirPath_, Logger.Message.MessageTypeEnum.INFO);
             dirPath = dirPath_;
             dirListener.Path = dirPath;
             dirListener.Filter = "*.*";
@@ -37,22 +38,46 @@ namespace ImageService.DirectoryListener
 
         public void StopListenDirectory(object sender, System.EventArgs e)
         {
+            logger.Log("Stop listen to: " + dirPath, Logger.Message.MessageTypeEnum.INFO);
             dirListener.EnableRaisingEvents = false;
-            // check - log here
         }
 
         public void OnChanged(object source, FileSystemEventArgs e)
         {
-            MyLogger.MyLogger.Log("In: " + dirPath + " in on change");
-            // check - log file got in folder 
+            logger.Log("New file detected in \"" + dirPath + "\"", Logger.Message.MessageTypeEnum.INFO);
             if (!filters.Contains(Path.GetExtension(e.FullPath)))
             {
-                // check - log not copied
-                MyLogger.MyLogger.Log("In: " + dirPath + " worng format");
+                logger.Log("File \"" + Path.GetFileName(e.FullPath) + "\" isnt an image", Logger.Message.MessageTypeEnum.INFO);
                 return;
             }
-            // check - log command and shck status
+            logger.Log("Backup \"" + Path.GetFileName(e.FullPath) + "\" is an image", Logger.Message.MessageTypeEnum.INFO);
             ExitCode status = controller.ExecuteCommand(Command.BackupFile, new string[] { e.FullPath });
+            if (status != ExitCode.Success)
+            {
+                logger.Log("Failed to back up \"" + Path.GetFileName(e.FullPath) + "\" reson of failuer: " + GetFailedReson(status), Logger.Message.MessageTypeEnum.FAIL);
+            }
+
+        }
+
+        private string GetFailedReson(ExitCode status)
+        {
+            switch (status)
+            {
+                case ExitCode.Failed:
+                    return "unknown";
+                case ExitCode.F_Create_Dir:
+                    return "unable to create image directory";
+                case ExitCode.F_Create_Thumb:
+                    return "unable to create thumbnail image";
+                case ExitCode.F_Invalid_Input:
+                    return "image doesn't exist";
+                case ExitCode.F_Missing_Date:
+                    return "missing image date of photo";
+                case ExitCode.F_Move:
+                    return "unable to move image to directory";
+                default:
+                    return "";
+            }
         }
 
     }

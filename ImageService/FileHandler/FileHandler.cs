@@ -59,7 +59,7 @@ namespace ImageService.FileHandler
 
             if (!File.Exists(from))
             {
-                return ExitCode.Invalid_Input;
+                return ExitCode.F_Invalid_Input;
             }
 
             try

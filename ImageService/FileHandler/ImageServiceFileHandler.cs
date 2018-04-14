@@ -37,20 +37,21 @@ namespace ImageService.FileHandler
                 System.Threading.Thread.Sleep(500);
             }
             DateTime date = GetImageDate(imagePath, out status);
-            if (status != ExitCode.Success) return status;
+            if (status != ExitCode.Success) return ExitCode.F_Missing_Date;
             string imageName = Path.GetFileName(imagePath);
             string imageDest = outputFolder + "\\" + date.Year + "\\" + date.Month;
             string imageThumbDest = outputFolder + "\\Thumbnails\\" + date.Year + "\\" + date.Month;
-            status = fileHandler.CreateDir(imageDest); // check - handle if failed
-            if (status != ExitCode.Success) return status;
-            status = fileHandler.CreateDir(imageThumbDest); // check - handle if failed
-            if (status != ExitCode.Success) return status;
-            Image thumbImage = fileHandler.CreateThumbnail(imagePath, thumbnailSize, out status); // check - handle if failed
-            if (status != ExitCode.Success) return status;
-            status = fileHandler.SaveImage(imageThumbDest + "\\" + imageName, thumbImage); // check - handle if failed
-            if (status != ExitCode.Success) return status;
-            status = fileHandler.MoveFile(imagePath, imageDest); // check - handle if failed
-            return status;
+            status = fileHandler.CreateDir(imageDest);
+            if (status != ExitCode.Success) return ExitCode.F_Create_Dir;
+            status = fileHandler.CreateDir(imageThumbDest);
+            if (status != ExitCode.Success) return ExitCode.F_Create_Dir;
+            Image thumbImage = fileHandler.CreateThumbnail(imagePath, thumbnailSize, out status);
+            if (status != ExitCode.Success) return ExitCode.F_Create_Thumb;
+            status = fileHandler.SaveImage(imageThumbDest + "\\" + imageName, thumbImage);
+            if (status != ExitCode.Success) return ExitCode.F_Create_Thumb;
+            status = fileHandler.MoveFile(imagePath, imageDest);
+            if (status != ExitCode.Success) return ExitCode.F_Move;
+            return ExitCode.Success;
         }
 
         private DateTime GetImageDate(string imagePath, out ExitCode status)
@@ -69,7 +70,7 @@ namespace ImageService.FileHandler
                 }
                 return date;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 status = ExitCode.Failed;
                 return DateTime.Now;

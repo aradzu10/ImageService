@@ -19,19 +19,18 @@ namespace ImageService.ListenerManager
 
         public event EventHandler CloseListener;
 
-        public ImageListenerManager(string outputDir, int thumbSize)
+        public ImageListenerManager(ILoggingService logger_, string outputDir, int thumbSize)
         {
             ImageServiceFileHandler imageServiceFile = new ImageServiceFileHandler(outputDir, thumbSize);
-            logger = new LoggingService();
+            logger = logger_;
             controller = new ImageController(imageServiceFile);
         }
 
         public void StartListenDir(string[] directories)
         {
-            // check - log
+            logger.Log("Start listening to folders", Logger.Message.MessageTypeEnum.INFO);
             foreach (string dir in directories)
             {
-                MyLogger.MyLogger.Log(dir); 
                 CreateDirListener(dir);
             }
         }
@@ -41,13 +40,12 @@ namespace ImageService.ListenerManager
             IDirectoryListener directoryListener = new ImageDirectoryListener(controller, logger);
             directoryListener.StartListenDirectory(dir);
             CloseListener += directoryListener.StopListenDirectory;
-            // check - log
         }
 
         public void StopListening()
         {
             CloseListener?.Invoke(this, null);
-            // check - log
+            logger.Log("Stop listening to all folders", Logger.Message.MessageTypeEnum.INFO);
         }
     }
 }
