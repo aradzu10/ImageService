@@ -14,12 +14,12 @@ namespace ImageService.DirectoryListener
     class ImageDirectoryListener : IDirectoryListener
     {
         private IImageController controller;
-        private ILoggingService logger;
+        private ILogger logger;
         private FileSystemWatcher dirListener;
         private string dirPath;
         private readonly string[] filters = { ".jpg", ".png", ".gif", ".bmp" };
 
-        public ImageDirectoryListener(IImageController controller_, ILoggingService logger_)
+        public ImageDirectoryListener(IImageController controller_, ILogger logger_)
         {
             controller = controller_;
             logger = logger_;
@@ -43,12 +43,10 @@ namespace ImageService.DirectoryListener
 
         public void OnChanged(object source, FileSystemEventArgs e)
         {
-            MyLogger.MyLogger.Log("In: " + dirPath + " in on change");
             // check - log file got in folder 
             if (!filters.Contains(Path.GetExtension(e.FullPath)))
             {
                 // check - log not copied
-                MyLogger.MyLogger.Log("In: " + dirPath + " worng format");
                 return;
             }
             // check - log command and shck status

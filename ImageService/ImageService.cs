@@ -81,7 +81,7 @@ namespace ImageService
             listenerManager.StopListening();
         }
 
-        public void WriteMessage(Object sender, MessageRecievedEventArgs e)
+        public void writeMessage(Object sender, MessageRecievedEventArgs e)
         {
             eventLog.WriteEntry(e.Message, GetType(e.Status));
         }

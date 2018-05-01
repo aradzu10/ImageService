@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImageService.Enums
+namespace ImageService.Server.ClientManager
 {
-    public enum ExitCode : int
+    public interface IClientHandler
     {
-        Failed,
-        Success,
-        Invalid_Input,
-        Done
+        void handleClient();
     }
 }

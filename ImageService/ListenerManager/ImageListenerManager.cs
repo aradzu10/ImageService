@@ -13,7 +13,7 @@ namespace ImageService.ListenerManager
     public class ImageListenerManager
     {
         #region Members
-        private ILoggingService logger;
+        private ILogger logger;
         private IImageController controller;
         #endregion
 
@@ -22,16 +22,14 @@ namespace ImageService.ListenerManager
         public ImageListenerManager(string outputDir, int thumbSize)
         {
             ImageServiceFileHandler imageServiceFile = new ImageServiceFileHandler(outputDir, thumbSize);
-            logger = new LoggingService();
+            logger = new ServiceLogger();
             controller = new ImageController(imageServiceFile);
         }
 
         public void StartListenDir(string[] directories)
         {
-            // check - log
             foreach (string dir in directories)
             {
-                MyLogger.MyLogger.Log(dir); 
                 CreateDirListener(dir);
             }
         }

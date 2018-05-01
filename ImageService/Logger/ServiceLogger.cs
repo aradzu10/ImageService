@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Logger
 {
-    public class LoggingService : ILoggingService
+    public class ServiceLogger : ILogger
     {
         public event EventHandler<MessageRecievedEventArgs> MessageRecieved;
 
-        public void Log(string message, MessageTypeEnum type)
+        public void log(string message, MessageTypeEnum type)
         {
             MessageRecieved?.Invoke(this, new MessageRecievedEventArgs(type, message));
         }

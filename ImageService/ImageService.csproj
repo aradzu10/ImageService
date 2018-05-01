@@ -70,8 +70,10 @@
       <DependentUpon>ImageService.cs</DependentUpon>
     </Compile>
     <Compile Include="ListenerManager\ImageListenerManager.cs" />
-    <Compile Include="Logger\ILoggingService.cs" />
-    <Compile Include="Logger\LoggingService.cs" />
+    <Compile Include="Logger\LogBackupHandler\LogReader.cs" />
+    <Compile Include="Logger\LogBackupHandler\LogSaver.cs" />
+    <Compile Include="Logger\ILogger.cs" />
+    <Compile Include="Logger\ServiceLogger.cs" />
     <Compile Include="Logger\Message\MessageRecievedEventArgs.cs" />
     <Compile Include="Logger\Message\MessageTypeEnum.cs" />
     <Compile Include="MyLogger\Logger.cs" />
@@ -83,6 +85,8 @@
       <DependentUpon>ProjectInstaller.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Server\ClientManager\ClientHandler.cs" />
+    <Compile Include="Server\ClientManager\IClientHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config">

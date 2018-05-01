@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Logger
 {
-    public interface ILoggingService
+    public interface ILogger
     {
         event EventHandler<MessageRecievedEventArgs> MessageRecieved;
-        void Log(string message, MessageTypeEnum type);           // Logging the Message
+        void log(string message, MessageTypeEnum type);
     }
 }
