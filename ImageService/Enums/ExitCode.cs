@@ -10,7 +10,11 @@ namespace ImageService.Enums
     {
         Failed,
         Success,
-        Invalid_Input,
-        Done
+        Done,
+        F_Invalid_Input,
+        F_Missing_Date,
+        F_Create_Dir,
+        F_Create_Thumb,
+        F_Move
     }
 }

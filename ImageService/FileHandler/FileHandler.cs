@@ -12,6 +12,10 @@ using System.Threading.Tasks;
 
 namespace ImageService.FileHandler
 {
+    /// <summary>
+    /// file handler
+    /// </summary>
+    /// everything here is really clear - so we didnt document it
     public class FileHandler : IFileHandler
     {
         public ExitCode CreateDir(string path)
@@ -59,7 +63,7 @@ namespace ImageService.FileHandler
 
             if (!File.Exists(from))
             {
-                return ExitCode.Invalid_Input;
+                return ExitCode.F_Invalid_Input;
             }
 
             try

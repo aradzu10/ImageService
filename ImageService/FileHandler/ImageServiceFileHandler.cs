@@ -11,46 +11,76 @@ using System.Threading.Tasks;
 
 namespace ImageService.FileHandler
 {
+    /// <summary>
+    /// current project image handler
+    /// to do all with the same path
+    /// and keep thumbnail size
+    /// </summary>
+    /// doucumented only what aint obvius
     public class ImageServiceFileHandler
     {
-        #region Members
-        private string outputFolder;            // The Output Folder
-        private int thumbnailSize;              // The Size Of The Thumbnail Size
+        private string outputFolder;
+        private int thumbnailSize;  
         private IFileHandler fileHandler;
-        #endregion
 
-        public ImageServiceFileHandler(string outputDir, int thumbSize, IFileHandler file_Handler)
+        public ImageServiceFileHandler(string outputDir, int thumbSize, IFileHandler file_Handler, out ExitCode status)
         {
             outputFolder = outputDir;
             thumbnailSize = thumbSize;
             fileHandler = file_Handler;
+            status = ExitCode.Success;
+            if (!Directory.Exists(outputDir))
+            {
+                try
+                {
+                    DirectoryInfo di = Directory.CreateDirectory(outputDir);
+                    di.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
+                }
+                catch (Exception)
+                {
+                    status = ExitCode.F_Create_Dir;
+                }
+            }
         }
 
-        public ImageServiceFileHandler(string outputDir, int thumbSize) : this(outputDir, thumbSize, new FileHandler()) { }
+        public ImageServiceFileHandler(string outputDir, int thumbSize, out ExitCode status) :
+            this(outputDir, thumbSize, new FileHandler(), out status) { }
 
-        public ExitCode BackupImage(string imagePath) // check - should return error enum
+        /// <summary>
+        /// backup currnt image
+        /// </summary>
+        /// <param name="imagePath">image</param>
+        /// <returns>if success or the reson of failuer</returns>
+        public ExitCode BackupImage(string imagePath)
         {
-            MyLogger.MyLogger.Log("Backup: " + imagePath);
+            // make sure file aint lock
             ExitCode status;
             while(IsFileLocked(imagePath))
             {
                 System.Threading.Thread.Sleep(500);
             }
+
             DateTime date = GetImageDate(imagePath, out status);
-            if (status != ExitCode.Success) return status;
+            if (status != ExitCode.Success) return ExitCode.F_Missing_Date;
+
             string imageName = Path.GetFileName(imagePath);
             string imageDest = outputFolder + "\\" + date.Year + "\\" + date.Month;
             string imageThumbDest = outputFolder + "\\Thumbnails\\" + date.Year + "\\" + date.Month;
-            status = fileHandler.CreateDir(imageDest); // check - handle if failed
-            if (status != ExitCode.Success) return status;
-            status = fileHandler.CreateDir(imageThumbDest); // check - handle if failed
-            if (status != ExitCode.Success) return status;
-            Image thumbImage = fileHandler.CreateThumbnail(imagePath, thumbnailSize, out status); // check - handle if failed
-            if (status != ExitCode.Success) return status;
-            status = fileHandler.SaveImage(imageThumbDest + "\\" + imageName, thumbImage); // check - handle if failed
-            if (status != ExitCode.Success) return status;
-            status = fileHandler.MoveFile(imagePath, imageDest); // check - handle if failed
-            return status;
+
+            status = fileHandler.CreateDir(imageDest);
+            if (status != ExitCode.Success) return ExitCode.F_Create_Dir;
+            status = fileHandler.CreateDir(imageThumbDest);
+            if (status != ExitCode.Success) return ExitCode.F_Create_Dir;
+
+            Image thumbImage = fileHandler.CreateThumbnail(imagePath, thumbnailSize, out status);
+            if (status != ExitCode.Success) return ExitCode.F_Create_Thumb;
+            status = fileHandler.SaveImage(imageThumbDest + "\\" + imageName, thumbImage);
+            if (status != ExitCode.Success) return ExitCode.F_Create_Thumb;
+
+            status = fileHandler.MoveFile(imagePath, imageDest);
+            if (status != ExitCode.Success) return ExitCode.F_Move;
+
+            return ExitCode.Success;
         }
 
         private DateTime GetImageDate(string imagePath, out ExitCode status)
@@ -69,7 +99,7 @@ namespace ImageService.FileHandler
                 }
                 return date;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 status = ExitCode.Failed;
                 return DateTime.Now;

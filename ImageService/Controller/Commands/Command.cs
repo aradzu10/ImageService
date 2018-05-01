@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ImageService.Commands
 {
+    /// <summary>
+    /// all supported command
+    /// </summary>
     public enum Command : int
     {
         BackupFile

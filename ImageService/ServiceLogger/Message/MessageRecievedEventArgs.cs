@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Logger.Message
 {
+    /// <summary>
+    /// log details
+    ///     /// </summary>
     public class MessageRecievedEventArgs : EventArgs
     {
         public MessageTypeEnum Status { get; set; }

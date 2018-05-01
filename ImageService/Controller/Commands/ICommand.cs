@@ -7,8 +7,11 @@ using System.Threading.Tasks;
 
 namespace ImageService.Commands
 {
+    /// <summary>
+    /// exexutable command
+    /// </summary>
     public interface ICommand
     {
-        ExitCode Execute(string[] args);          // The Function That will Execute The 
+        ExitCode Execute(string[] args);
     }
 }

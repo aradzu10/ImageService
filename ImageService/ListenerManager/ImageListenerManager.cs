@@ -1,5 +1,6 @@
 ﻿using ImageService.Controller;
 using ImageService.DirectoryListener;
+using ImageService.Enums;
 using ImageService.FileHandler;
 using Logger;
 using System;
@@ -10,42 +11,66 @@ using System.Threading.Tasks;
 
 namespace ImageService.ListenerManager
 {
+    /// <summary>
+    /// handle all directory listeners
+    /// </summary>
     public class ImageListenerManager
     {
-        #region Members
-        private ILogger logger;
+        private ILoggingService logger;
         private IImageController controller;
-        #endregion
 
         public event EventHandler CloseListener;
 
-        public ImageListenerManager(string outputDir, int thumbSize)
+        public ImageListenerManager(ILoggingService logger_, string outputDir, int thumbSize)
         {
-            ImageServiceFileHandler imageServiceFile = new ImageServiceFileHandler(outputDir, thumbSize);
-            logger = new ServiceLogger();
+            // create controller
+            // and check that output dirctory successfully creates
+            ExitCode status;
+            ImageServiceFileHandler imageServiceFile = new ImageServiceFileHandler(outputDir, thumbSize, out status);
+            logger = logger_;
             controller = new ImageController(imageServiceFile);
+            if (status == ExitCode.F_Create_Dir)
+            {
+                logger.Log("Cannot create output image folder.\nFatal error cannot recover, exiting",
+                    Logger.Message.MessageTypeEnum.FAIL);
+                Environment.Exit(1);
+            }
         }
 
+        /// <summary>
+        /// start all listeners
+        /// </summary>
+        /// <param name="directories">all dirs to listen</param>
         public void StartListenDir(string[] directories)
         {
+            logger.Log("Start listening to folders", Logger.Message.MessageTypeEnum.INFO);
             foreach (string dir in directories)
             {
                 CreateDirListener(dir);
             }
         }
 
+        /// <summary>
+        /// create spesific dir
+        /// </summary>
+        /// <param name="dir"></param>
         private void CreateDirListener(string dir)
         {
+            // check that dir exist
             IDirectoryListener directoryListener = new ImageDirectoryListener(controller, logger);
-            directoryListener.StartListenDirectory(dir);
-            CloseListener += directoryListener.StopListenDirectory;
-            // check - log
+            if (directoryListener.StartListenDirectory(dir) == ExitCode.Success)
+            {
+                CloseListener += directoryListener.StopListenDirectory;
+            }
         }
 
+        /// <summary>
+        /// stop all listeners
+        /// </summary>
         public void StopListening()
         {
             CloseListener?.Invoke(this, null);
-            // check - log
+            logger.Log("Stop listening to all folders", Logger.Message.MessageTypeEnum.INFO);
         }
     }
 }

@@ -11,6 +11,7 @@ using System.Runtime.InteropServices;
 using Logger.Message;
 using System.Configuration;
 using ImageService.ListenerManager;
+using Logger;
 
 public enum ServiceState
 {
@@ -38,6 +39,9 @@ public struct ServiceStatus
 
 namespace ImageService
 {
+    /// <summary>
+    /// the service
+    /// </summary>
     public partial class ImageService : ServiceBase
     {
         private ImageListenerManager listenerManager;
@@ -57,28 +61,36 @@ namespace ImageService
             eventLog.Log = logName;
             string outputFolder = ConfigurationManager.AppSettings.Get("OutputDir");
             int ThumbnailSize = Int32.Parse(ConfigurationManager.AppSettings.Get("ThumbnailSize"));
-            listenerManager = new ImageListenerManager(outputFolder, ThumbnailSize);
+            ILoggingService logger = new LoggingService();
+            logger.MessageRecieved += WriteMessage;
+            listenerManager = new ImageListenerManager(logger, outputFolder, ThumbnailSize);
             folderToListen = (ConfigurationManager.AppSettings.Get("Handler").Split(';'));
         }
 
         protected override void OnStart(string[] args)
         {
-            // check - log
             ServiceStatus serviceStatus = new ServiceStatus();
             serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
+            eventLog.WriteEntry("Service start running", GetType(MessageTypeEnum.INFO));
             listenerManager.StartListenDir(folderToListen);
 
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
-            // check - log
         }
 
         protected override void OnStop()
         {
-            // check - log
+            ServiceStatus serviceStatus = new ServiceStatus();
+            serviceStatus.dwCurrentState = ServiceState.SERVICE_STOP_PENDING;
+            SetServiceStatus(this.ServiceHandle, ref serviceStatus);
+
             listenerManager.StopListening();
+            eventLog.WriteEntry("Service stoped", GetType(MessageTypeEnum.INFO));
+
+            serviceStatus.dwCurrentState = ServiceState.SERVICE_STOPPED;
+            SetServiceStatus(this.ServiceHandle, ref serviceStatus);
         }
 
         public void writeMessage(Object sender, MessageRecievedEventArgs e)
