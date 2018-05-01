@@ -61,9 +61,9 @@ namespace ImageService
             eventLog.Log = logName;
             string outputFolder = ConfigurationManager.AppSettings.Get("OutputDir");
             int ThumbnailSize = Int32.Parse(ConfigurationManager.AppSettings.Get("ThumbnailSize"));
-            ILoggingService logger = new LoggingService();
-            logger.MessageRecieved += WriteMessage;
-            listenerManager = new ImageListenerManager(logger, outputFolder, ThumbnailSize);
+            ILogger logger = new ServiceLogger();
+            logger.MessageRecieved += writeMessage;
+            listenerManager = new ImageListenerManager(logger, outputFolder, eventSourceName, logName, ThumbnailSize);
             folderToListen = (ConfigurationManager.AppSettings.Get("Handler").Split(';'));
         }
 

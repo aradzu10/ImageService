@@ -8,11 +8,17 @@
         Title="Image Service User Interface" Height="450" Width="800">
     <Grid>
         <TabControl>
-            <TabItem Header="Settings" Margin="-2,-2,-2,2">
-                <Grid Background="#FFE5E5E5"/>
-            </TabItem>
-            <TabItem Header="Log">
-                <Grid Background="#FFE5E5E5"/>
+            <TabItem Header="Settings" Margin="0,0,-4,0"/>
+            <TabItem Header="Log" Width="59">
+                <Grid Background="#FFE5E5E5" Margin="0,33,0,0">
+                    <DataGrid x:Name="LogGrid" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn Header="Type" Width="70" IsReadOnly="True" CanUserResize="False"/>
+                            <DataGridTemplateColumn Header="Message" Width="*"  IsReadOnly="True">
+                            </DataGridTemplateColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </Grid>
             </TabItem>
         </TabControl>
 

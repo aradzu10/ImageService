@@ -11,7 +11,7 @@ namespace Logger
     {
         public event EventHandler<MessageRecievedEventArgs> MessageRecieved;
 
-        public void log(string message, MessageTypeEnum type)
+        public void Log(string message, MessageTypeEnum type)
         {
             MessageRecieved?.Invoke(this, new MessageRecievedEventArgs(type, message));
         }

@@ -10,6 +10,6 @@ namespace Logger
     public interface ILogger
     {
         event EventHandler<MessageRecievedEventArgs> MessageRecieved;
-        void log(string message, MessageTypeEnum type);
+        void Log(string message, MessageTypeEnum type);
     }
 }
