@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ImageService.Commands;
 using ImageService.Controller;
 using Logger;
-using Logger.Message;
+using Messages;
 using System.IO;
 using ImageService.Enums;
 using ImageService.ListenerManager;
@@ -42,11 +42,11 @@ namespace ImageService.DirectoryListener
             // make sure dir exist
             // if not exit
             // else initate all settings
-            logger.Log("Start listening to: " + dirPath_, MessageTypeEnum.INFO);
+            logger.Log("Start listening to: " + dirPath_, MessageTypeEnum.L_INFO);
             if (!Directory.Exists(dirPath_))
             {
                 logger.Log("Directory \"" + dirPath_ + "\" doesn't exist\n didn't add directory",
-                    MessageTypeEnum.FAIL);
+                    MessageTypeEnum.L_FAIL);
                 return ExitCode.Failed;
             }
             dirPath = dirPath_;
@@ -64,7 +64,7 @@ namespace ImageService.DirectoryListener
         /// <param name="e">args - not use</param>
         public void StopListenDirectory(object sender, System.EventArgs e)
         {
-            logger.Log("Stop listen to: " + dirPath, MessageTypeEnum.INFO);
+            logger.Log("Stop listen to: " + dirPath, MessageTypeEnum.L_INFO);
             dirListener.EnableRaisingEvents = false;
             dirListener.Dispose();
             ((ImageListenerManager)sender).CloseAll -= this.StopListenDirectory;
@@ -79,25 +79,25 @@ namespace ImageService.DirectoryListener
         {
             // check if file is an image
             // if it is, backup 
-            logger.Log("New file detected in \"" + dirPath + "\"", MessageTypeEnum.INFO);
+            logger.Log("New file detected in \"" + dirPath + "\"", MessageTypeEnum.L_INFO);
             if (!filters.Contains(Path.GetExtension(e.FullPath)))
             {
                 logger.Log("File \"" + Path.GetFileName(e.FullPath) + "\" isnt an image",
-                    MessageTypeEnum.INFO);
+                    MessageTypeEnum.L_INFO);
                 return;
             }
             logger.Log("Backup \"" + Path.GetFileName(e.FullPath) + "\" is an image",
-                MessageTypeEnum.INFO);
+                MessageTypeEnum.L_INFO);
             ExitCode status = controller.ExecuteCommand(Command.BackupFile, new string[] { e.FullPath });
             if (status != ExitCode.Success)
             {
                 logger.Log("Failed to back up \"" + Path.GetFileName(e.FullPath) + "\" reson of failuer: " +
-                    GetFailedReson(status), MessageTypeEnum.FAIL);
+                    GetFailedReson(status), MessageTypeEnum.L_FAIL);
             }
             else
             {
                 logger.Log("Successfully Backup \"" + Path.GetFileName(e.FullPath) + "\" and created thumbnail",
-                    MessageTypeEnum.INFO);
+                    MessageTypeEnum.L_INFO);
             }
 
         }

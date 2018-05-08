@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
-namespace Logger.Message
+namespace Messages
 {
     public class MessageRecievedEventArgs : EventArgs
     {
@@ -17,5 +18,9 @@ namespace Logger.Message
             Message = message;
         }
 
+        public string Serialize()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 }

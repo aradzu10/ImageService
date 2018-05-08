@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ImageService.Enums;
 using Logger;
-using Logger.Message;
+using Messages;
 
 namespace ImageService.Logger.LogBackupHandler
 {
@@ -30,20 +30,9 @@ namespace ImageService.Logger.LogBackupHandler
             // check - mutex needed? maybe while file open
             try
             {
-                File.AppendAllText(path, StatusToString(e.Status) + Environment.NewLine
-                    + e.Message + Environment.NewLine);
+                // check - json write in one line
+                File.AppendAllText(path, e.Serialize() + "\n");
             } catch (Exception) {}
-        }
-
-        private SC_MessageType StatusToString(MessageTypeEnum messageType)
-        {
-            switch (messageType)
-            {
-                case MessageTypeEnum.INFO: return SC_MessageType.L_info;
-                case MessageTypeEnum.WARNING: return SC_MessageType.L_warning;
-                case MessageTypeEnum.FAIL: return SC_MessageType.L_fail;
-                default: return SC_MessageType.Unknown;
-            }
         }
     }
 }

@@ -4,12 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logger.Message
+namespace Messages
 {
     public enum MessageTypeEnum : int
     {
-        INFO,
-        WARNING,
-        FAIL
+        L_INFO,
+        L_WARNING,
+        L_FAIL,
+        REMOVE_HANDLER,
+        UNKNOWN
     }
 }

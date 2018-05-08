@@ -13,3 +13,6 @@ C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\ImageServiceUI
 C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\ImageServiceUI.csproj.CoreCompileInputs.cache
 C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\ImageServiceUI.exe
 C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\ImageServiceUI.pdb
+C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\ImageServiceUI.csproj.CopyComplete

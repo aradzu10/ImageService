@@ -37,6 +37,9 @@
       <HintPath>..\packages\Bitbucket.1.9.2\lib\netstandard2.0\Bitbucket.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Configuration.Install" />
@@ -60,7 +63,6 @@
     <Compile Include="DirectoryListener\ImageDirectoryListener.cs" />
     <Compile Include="DirectoryListener\IDirectoryListener.cs" />
     <Compile Include="Enums\ExitCode.cs" />
-    <Compile Include="Enums\SC_MessageType.cs" />
     <Compile Include="FileHandler\ImageServiceFileHandler.cs" />
     <Compile Include="FileHandler\IFileHandler.cs" />
     <Compile Include="FileHandler\FileHandler.cs" />
@@ -71,12 +73,12 @@
       <DependentUpon>ImageService.cs</DependentUpon>
     </Compile>
     <Compile Include="ListenerManager\ImageListenerManager.cs" />
-    <Compile Include="ListenerManager\Settings.cs" />
+    <Compile Include="Messages\Settings.cs" />
     <Compile Include="Logger\LogBackupHandler\LogReader.cs" />
     <Compile Include="Logger\LogBackupHandler\LogSaver.cs" />
     <Compile Include="Logger\ILogger.cs" />
-    <Compile Include="Logger\Message\MessageRecievedEventArgs.cs" />
-    <Compile Include="Logger\Message\MessageTypeEnum.cs" />
+    <Compile Include="Messages\MessageRecievedEventArgs.cs" />
+    <Compile Include="Messages\MessageTypeEnum.cs" />
     <Compile Include="Logger\ServiceLogger.cs" />
     <Compile Include="MyLogger\Logger.cs" />
     <Compile Include="Program.cs" />

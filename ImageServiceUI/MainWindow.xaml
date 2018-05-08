@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="Image Service User Interface" Height="450" Width="800">
     <Grid>
-        <TabControl>
+        <TabControl MouseDoubleClick="TabControl_MouseDoubleClick">
             <TabItem Header="Settings" Margin="0,0,-4,0"/>
             <TabItem Header="Log" Width="59">
                 <Grid Background="#FFE5E5E5" Margin="0,33,0,0">

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ImageService.Enums;
+using Messages;
+using Newtonsoft.Json;
 
 namespace ImageService.Logger.LogBackupHandler
 {
@@ -42,6 +44,7 @@ namespace ImageService.Logger.LogBackupHandler
                 {
                     // check - if last line == 0 ok
                     // check - what happen in EOF and return exit code done
+                    // check - json line by line
                     var lines = File.ReadLines(path);
                     line = lines.Skip(lastLineNumber).First();
                     lastLineNumber++;

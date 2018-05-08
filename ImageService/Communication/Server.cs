@@ -1,4 +1,5 @@
 ﻿using ImageService.ListenerManager;
+using Messages;
 using ImageService.Communication.ClientManager;
 using System;
 using System.Collections.Generic;

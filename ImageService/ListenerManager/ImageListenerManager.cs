@@ -6,12 +6,13 @@ using ImageService.Enums;
 using ImageService.FileHandler;
 using ImageService.Logger.LogBackupHandler;
 using Logger;
-using Logger.Message;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Messages;
+
 
 namespace ImageService.ListenerManager
 {
@@ -27,7 +28,7 @@ namespace ImageService.ListenerManager
         private Server server;
 
         public event EventHandler CloseAll;
-        public event EventHandler<String> RemoveDir;
+        public event EventHandler<MessageRecievedEventArgs> RemoveDir;
 
         public ImageListenerManager(ILogger logger_, string outputDir, string sourceName, string logName, int thumbSize)
         {
@@ -39,7 +40,7 @@ namespace ImageService.ListenerManager
             if (status == ExitCode.F_Create_Dir)
             {
                 logger.Log("Cannot create output image folder.\nFatal error cannot recover, exiting",
-                    MessageTypeEnum.FAIL);
+                    MessageTypeEnum.L_FAIL);
                 Environment.Exit(1);
             }
 
@@ -58,7 +59,7 @@ namespace ImageService.ListenerManager
         /// <param name="directories">all dirs to listen</param>
         public void StartListenDir(string[] directories)
         {
-            logger.Log("Start listening to folders", MessageTypeEnum.INFO);
+            logger.Log("Start listening to folders", MessageTypeEnum.L_INFO);
             foreach (string dir in directories)
             {
                 CreateDirListener(dir);
@@ -89,20 +90,25 @@ namespace ImageService.ListenerManager
         public void StopListening()
         {
             CloseAll?.Invoke(this, null);
-            logger.Log("Stop listening to all folders", MessageTypeEnum.INFO);
+            logger.Log("Stop listening to all folders", MessageTypeEnum.L_INFO);
         }
 
-        public void StopListenToDirectory(object sender, String dir)
+        public void StopListenToDirectory(object sender, MessageRecievedEventArgs dir)
         {
-            if (!directories.ContainsKey(dir))
+            if (!directories.ContainsKey(dir.Message))
             {
                 return;
             }
-            directories[dir].StopListenDirectory(this, null);
-            directories.Remove(dir);
-            settings.RemoveDirectories(dir);
+            directories[dir.Message].StopListenDirectory(this, null);
+            directories.Remove(dir.Message);
+            settings.RemoveDirectories(dir.Message);
             RemoveDir?.Invoke(this, dir);
-            logger.Log("Stop listening to: " + dir, MessageTypeEnum.INFO); 
+            logger.Log("Stop listening to: " + dir, MessageTypeEnum.L_INFO); 
+        }
+
+        public void CloseClient(object sender, System.EventArgs e)
+        {
+            CloseAll -= ((ClientCommunication)sender).StopCommunication;
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using ImageService.Enums;
 using ImageService.ListenerManager;
-using Logger.Message;
+using Messages;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,13 +9,15 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using static ImageService.Logger.LogBackupHandler.LogReader;
+using Newtonsoft.Json;
 
 namespace ImageService.Communication.ClientManager
 {
     class ClientCommunication
     {
         TcpClient client;
-        public event EventHandler<String> OnRemoveDir;
+        public event EventHandler<MessageRecievedEventArgs> OnRemoveDir;
+        public event EventHandler OnStop;
 
         public ClientCommunication(TcpClient client_)
         {
@@ -29,20 +31,13 @@ namespace ImageService.Communication.ClientManager
                 using (NetworkStream stream = client.GetStream())
                 using (StreamWriter writer = new StreamWriter(stream))
                 {
-                    writer.Write(SC_MessageType.S_outputDir + "\n" + settings.outputPath);
-                    writer.Write(SC_MessageType.S_sourceName + "\n" + settings.sourceName);
-                    writer.Write(SC_MessageType.S_logName + "\n" + settings.logName);
-                    writer.Write(SC_MessageType.S_thumbSize + "\n" + settings.thumbSize);
-                    foreach (var dir in settings.directories)
-                    {
-                        writer.Write(SC_MessageType.S_dirListener + "\n" + dir);
-                    }
+                    writer.WriteLine(settings.Serialize());
 
-                    string curLine;
+                    string curMessage;
                     ExitCode code;
-                    while ((code = readLogFile.NextLine(out curLine)) == ExitCode.Success)
+                    while ((code = readLogFile.NextLine(out curMessage)) == ExitCode.Success)
                     {
-                        writer.Write(curLine);
+                        writer.WriteLine(curMessage);
                     }
                 }
             }
@@ -58,33 +53,22 @@ namespace ImageService.Communication.ClientManager
                 using (NetworkStream stream = client.GetStream())
                 using (StreamWriter writer = new StreamWriter(stream))
                 {
-                    writer.Write(StatusToString(e.Status) + "\n" + e.Message);
+                    writer.WriteLine(e.Serialize());
                 }
             } catch (Exception) {}
         }
 
-        public void RemoveDir(Object sender, String dir)
+        public void RemoveDir(Object sender, MessageRecievedEventArgs dir)
         {
             try
             {
                 using (NetworkStream stream = client.GetStream())
                 using (StreamWriter writer = new StreamWriter(stream))
                 {
-                    writer.Write(SC_MessageType.RemoveHandler + "\n" + dir);
+                    writer.WriteLine(dir.Serialize());
                 }
             }
             catch (Exception) { }
-        }
-
-        private SC_MessageType StatusToString(MessageTypeEnum messageType)
-        {
-            switch (messageType)
-            {
-                case MessageTypeEnum.INFO: return SC_MessageType.L_info;
-                case MessageTypeEnum.WARNING: return SC_MessageType.L_warning;
-                case MessageTypeEnum.FAIL: return SC_MessageType.L_fail;
-                default: return SC_MessageType.Unknown;
-            }
         }
 
         public void UpdatesListner()
@@ -98,25 +82,22 @@ namespace ImageService.Communication.ClientManager
                     {
                         // check - do command
                         // when client disconnect
-                        string commandLine = reader.ReadLine();
-                        ClientRequest(commandLine, reader);
+                        string command = reader.ReadLine();
+                        MessageRecievedEventArgs message = (MessageRecievedEventArgs)JsonConvert.DeserializeObject(command);
+                        ClientRequest(message, reader);
                     }
                 }
-            } catch (Exception) {}
+            } catch (Exception) {
+                StopCommunication(this, null);
+            }
         }
 
-        private void ClientRequest(string message, StreamReader reader)
+        private void ClientRequest(MessageRecievedEventArgs message, StreamReader reader)
         {
-            SC_MessageType task;
-            try
+            switch (message.Status)
             {
-                task = (SC_MessageType)Enum.Parse(typeof(SC_MessageType), message);
-            } catch (Exception) { return; }
-            switch (task)
-            {
-                case SC_MessageType.RemoveHandler:
-                    string dir = reader.ReadLine();
-                    OnRemoveDir?.Invoke(this, dir);
+                case MessageTypeEnum.REMOVE_HANDLER:
+                    OnRemoveDir?.Invoke(this, message);
                     break;
                 default:
                     break;
@@ -124,11 +105,10 @@ namespace ImageService.Communication.ClientManager
             }
         }
 
-
-
         public void StopCommunication(object sender, System.EventArgs e)
         {
             client?.Close();
+            OnStop?.Invoke(this, null);
         }
     }
 }

@@ -8,7 +8,7 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
-using Logger.Message;
+using Messages;
 using System.Configuration;
 using ImageService.ListenerManager;
 using Logger;
@@ -73,7 +73,7 @@ namespace ImageService
             serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
-            eventLog.WriteEntry("Service start running", GetType(MessageTypeEnum.INFO));
+            eventLog.WriteEntry("Service start running", GetType(MessageTypeEnum.L_INFO));
             listenerManager.StartListenDir(folderToListen);
 
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
@@ -87,7 +87,7 @@ namespace ImageService
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
             listenerManager.StopListening();
-            eventLog.WriteEntry("Service stoped", GetType(MessageTypeEnum.INFO));
+            eventLog.WriteEntry("Service stoped", GetType(MessageTypeEnum.L_INFO));
 
             serviceStatus.dwCurrentState = ServiceState.SERVICE_STOPPED;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
@@ -105,11 +105,11 @@ namespace ImageService
         {
             switch (status)
             {
-                case MessageTypeEnum.FAIL:
+                case MessageTypeEnum.L_FAIL:
                     return EventLogEntryType.Error;
-                case MessageTypeEnum.WARNING:
+                case MessageTypeEnum.L_WARNING:
                     return EventLogEntryType.Warning;
-                case MessageTypeEnum.INFO:
+                case MessageTypeEnum.L_INFO:
                 default:
                     return EventLogEntryType.Information;
             }
