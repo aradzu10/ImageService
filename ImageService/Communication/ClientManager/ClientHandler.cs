@@ -1,6 +1,6 @@
 ﻿using ImageService.Enums;
 using ImageService.ListenerManager;
-using Messages;
+using ImageService.Messages;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +8,6 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
-using static ImageService.Logger.LogBackupHandler.LogReader;
 
 namespace ImageService.Communication.ClientManager
 {
@@ -20,8 +19,8 @@ namespace ImageService.Communication.ClientManager
             client.OnRemoveDir += imageListenerManager.StopListenToDirectory;
             client.OnStop += imageListenerManager.CloseClient;
             imageListenerManager.CloseAll += client.StopCommunication;
-            LogFileReader reader = new LogFileReader(settings.logPath);
-            client.StartCommunication(settings, reader);
+            imageListenerManager.RemoveDir += client.WriteMessage;
+            client.StartCommunication(settings);
             client.UpdatesListner();
         }
     }

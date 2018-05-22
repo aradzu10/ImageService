@@ -1,6 +1,6 @@
 ﻿using ImageService.Enums;
 using ImageService.ListenerManager;
-using Messages;
+using ImageService.Messages;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,8 +8,8 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
-using static ImageService.Logger.LogBackupHandler.LogReader;
 using Newtonsoft.Json;
+using ImageService.Logger;
 
 namespace ImageService.Communication.ClientManager
 {
@@ -24,20 +24,19 @@ namespace ImageService.Communication.ClientManager
             client = client_;
         }
 
-        public void StartCommunication(Settings settings, LogFileReader readLogFile)
+        public void StartCommunication(Settings settings)
         {
+            LogBackup logBackup = LogBackup.Instance;
             try
             {
                 using (NetworkStream stream = client.GetStream())
                 using (StreamWriter writer = new StreamWriter(stream))
                 {
-                    writer.WriteLine(settings.Serialize());
+                    writer.WriteLine(new MessageRecievedEventArgs(MessageTypeEnum.SETTINGS, settings.Serialize()).Serialize());
 
-                    string curMessage;
-                    ExitCode code;
-                    while ((code = readLogFile.NextLine(out curMessage)) == ExitCode.Success)
+                    foreach (MessageRecievedEventArgs mess in logBackup.messages)
                     {
-                        writer.WriteLine(curMessage);
+                        writer.WriteLine(mess.Serialize());
                     }
                 }
             }
@@ -55,18 +54,6 @@ namespace ImageService.Communication.ClientManager
                 {
                     writer.WriteLine(e.Serialize());
                 }
-            } catch (Exception) {}
-        }
-
-        public void RemoveDir(Object sender, MessageRecievedEventArgs dir)
-        {
-            try
-            {
-                using (NetworkStream stream = client.GetStream())
-                using (StreamWriter writer = new StreamWriter(stream))
-                {
-                    writer.WriteLine(dir.Serialize());
-                }
             }
             catch (Exception) { }
         }
@@ -83,11 +70,13 @@ namespace ImageService.Communication.ClientManager
                         // check - do command
                         // when client disconnect
                         string command = reader.ReadLine();
-                        MessageRecievedEventArgs message = (MessageRecievedEventArgs)JsonConvert.DeserializeObject(command);
+                        MessageRecievedEventArgs message = MessageRecievedEventArgs.Deserialize(command);
                         ClientRequest(message, reader);
                     }
                 }
-            } catch (Exception) {
+            }
+            catch (Exception)
+            {
                 StopCommunication(this, null);
             }
         }

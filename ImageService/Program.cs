@@ -27,16 +27,18 @@ namespace ImageService
                 new ImageService()
             };
             ServiceBase.Run(ServicesToRun);
+
             /* my tests
             ------------
+
             string outputFolder = ConfigurationManager.AppSettings.Get("OutputDir");
             int ThumbnailSize = Int32.Parse(ConfigurationManager.AppSettings.Get("ThumbnailSize"));
-            ILoggingService logger = new LoggingService();
-            ImageListenerManager listenerManager = new ImageListenerManager(logger, outputFolder, ThumbnailSize);
+            ILogger logger = new ServiceLogger();
+            ImageListenerManager listenerManager = new ImageListenerManager(logger, outputFolder,"","", ThumbnailSize);
             string[] folderToListen = (ConfigurationManager.AppSettings.Get("Handler").Split(';'));
             listenerManager.StartListenDir(folderToListen);
-            while (true) { }
-            */
+            while (true) { }*/
+            
         }
     }
 }

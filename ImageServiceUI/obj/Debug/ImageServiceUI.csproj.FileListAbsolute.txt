@@ -2,11 +2,9 @@ C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\bin\Debug\ImageServiceUI
 C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\bin\Debug\ImageServiceUI.exe
 C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\bin\Debug\ImageServiceUI.pdb
 C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\ImageServiceUI.csprojResolveAssemblyReference.cache
-C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\MainWindow.g.cs
 C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\App.g.cs
 C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\ImageServiceUI_MarkupCompile.cache
 C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\ImageServiceUI_MarkupCompile.lref
-C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\MainWindow.baml
 C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\ImageServiceUI.g.resources
 C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\ImageServiceUI.Properties.Resources.resources
 C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\ImageServiceUI.csproj.GenerateResource.cache
@@ -16,3 +14,11 @@ C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\ImageServiceUI
 C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\bin\Debug\Newtonsoft.Json.dll
 C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\bin\Debug\Newtonsoft.Json.xml
 C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\ImageServiceUI.csproj.CopyComplete
+C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\View\MainWindow.g.cs
+C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\View\MainWindow.baml
+C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\View\Log.g.cs
+C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\View\Log.baml
+C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\View\Settings.g.cs
+C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\View\Settings.baml
+C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\bin\Debug\Commands.dll

@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Messages
+namespace ImageServiceUI.Messages
 {
     public enum MessageTypeEnum : int
     {
+        SETTINGS,
         L_INFO,
         L_WARNING,
         L_FAIL,

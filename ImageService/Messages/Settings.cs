@@ -5,23 +5,21 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace Messages
+namespace ImageService.Messages
 {
     public class Settings
     {
         public string outputPath { get; }
         public string sourceName { get; }
         public string logName { get; }
-        public string logPath { get; }
         public int thumbSize { get; }
         public List<string> directories { get; }
 
-        public Settings(string outputPath, string sourceName, string logName, string logPath, int thumbSize)
+        public Settings(string outputPath, string sourceName, string logName, int thumbSize)
         {
             this.outputPath = outputPath;
             this.sourceName = sourceName;
             this.logName = logName;
-            this.logPath = logPath;
             this.thumbSize = thumbSize;
             this.directories = new List<string>();
         }

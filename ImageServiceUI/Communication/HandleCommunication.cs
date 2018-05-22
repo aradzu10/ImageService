@@ -1,4 +1,4 @@
-﻿using Messages;
+﻿using ImageServiceUI.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,24 +15,22 @@ namespace ImageServiceUI.Communication
         public event EventHandler<MessageRecievedEventArgs> OnHandelRemove;
         public event EventHandler<Settings> SetSettings;
 
-        public HandleCommunication(Client client_)
+        public HandleCommunication()
         {
-            client = client_;
+            client = new Client();
         }
 
-        public void GetSettings()
+        public bool ConnectToServer()
         {
-            string mess = client.ReadFromServer();
-            Settings settings = (Settings)JsonConvert.DeserializeObject(mess);
-            SetSettings?.Invoke(this, settings);
+            return client.ConnectToServer();
         }
 
-        public void GetMessages()
+        public void Communication()
         {
             while (true)
             {
                 string mess = client.ReadFromServer();
-                MessageRecievedEventArgs message = (MessageRecievedEventArgs)JsonConvert.DeserializeObject(mess);
+                MessageRecievedEventArgs message = MessageRecievedEventArgs.Deserialize(mess);
                 HandleMessage(message);
             }
         }
@@ -43,10 +41,19 @@ namespace ImageServiceUI.Communication
             client.WriteToServer(message.Serialize());
         }
 
+        public void CloseClient()
+        {
+            client.StopCommunication();
+        }
+
         private void HandleMessage(MessageRecievedEventArgs message)
         {
             switch(message.Status)
             {
+                case MessageTypeEnum.SETTINGS:
+                    Settings settings = Settings.Deserialize(message.Message);
+                    SetSettings?.Invoke(this, settings);
+                    break;
                 case MessageTypeEnum.REMOVE_HANDLER:
                     OnHandelRemove?.Invoke(this, message);
                     break;

@@ -4,15 +4,14 @@ using ImageService.Controller;
 using ImageService.DirectoryListener;
 using ImageService.Enums;
 using ImageService.FileHandler;
-using ImageService.Logger.LogBackupHandler;
 using Logger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Messages;
-
+using ImageService.Messages;
+using ImageService.Logger;
 
 namespace ImageService.ListenerManager
 {
@@ -45,11 +44,10 @@ namespace ImageService.ListenerManager
             }
 
             int port = 6145;
-            string logPath = "log.txt";
-            LogSaver logSaver = new LogSaver(logPath);
-            logger.MessageRecieved += logSaver.WriteMessage;
+            LogBackup logBackup = LogBackup.Instance;
+            logger.MessageRecieved += logBackup.WriteMessage;
             directories = new Dictionary<string, IDirectoryListener>();
-            settings = new Settings(outputDir, sourceName, logName, logPath, thumbSize);
+            settings = new Settings(outputDir, sourceName, logName, thumbSize);
             server = new Server(port, new ClientHandler(), settings, this);
         }
 

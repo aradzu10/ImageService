@@ -8,7 +8,7 @@ using System.ServiceProcess;
 using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.InteropServices;
-using Messages;
+using ImageService.Messages;
 using System.Configuration;
 using ImageService.ListenerManager;
 using Logger;

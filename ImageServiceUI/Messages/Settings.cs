@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace Messages
+namespace ImageServiceUI.Messages
 {
     public class Settings
     {
@@ -39,6 +39,12 @@ namespace Messages
         public string Serialize()
         {
             return JsonConvert.SerializeObject(this);
+        }
+
+        public static Settings Deserialize(string obj)
+        {
+            return JsonConvert.DeserializeObject<Settings>(obj);
+
         }
     }
 }

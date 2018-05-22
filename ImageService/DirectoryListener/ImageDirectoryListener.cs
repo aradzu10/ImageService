@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ImageService.Commands;
 using ImageService.Controller;
 using Logger;
-using Messages;
+using ImageService.Messages;
 using System.IO;
 using ImageService.Enums;
 using ImageService.ListenerManager;
@@ -45,6 +45,7 @@ namespace ImageService.DirectoryListener
             logger.Log("Start listening to: " + dirPath_, MessageTypeEnum.L_INFO);
             if (!Directory.Exists(dirPath_))
             {
+                Directory.CreateDirectory(dirPath_);
                 logger.Log("Directory \"" + dirPath_ + "\" doesn't exist\n didn't add directory",
                     MessageTypeEnum.L_FAIL);
                 return ExitCode.Failed;

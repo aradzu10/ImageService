@@ -73,9 +73,8 @@
       <DependentUpon>ImageService.cs</DependentUpon>
     </Compile>
     <Compile Include="ListenerManager\ImageListenerManager.cs" />
+    <Compile Include="Logger\LogBackup.cs" />
     <Compile Include="Messages\Settings.cs" />
-    <Compile Include="Logger\LogBackupHandler\LogReader.cs" />
-    <Compile Include="Logger\LogBackupHandler\LogSaver.cs" />
     <Compile Include="Logger\ILogger.cs" />
     <Compile Include="Messages\MessageRecievedEventArgs.cs" />
     <Compile Include="Messages\MessageTypeEnum.cs" />

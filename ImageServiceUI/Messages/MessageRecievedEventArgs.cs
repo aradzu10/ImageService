@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 
-namespace Messages
+namespace ImageServiceUI.Messages
 {
     public class MessageRecievedEventArgs : EventArgs
     {
@@ -21,6 +21,11 @@ namespace Messages
         public string Serialize()
         {
             return JsonConvert.SerializeObject(this);
+        }
+
+        public static MessageRecievedEventArgs Deserialize(string mess)
+        {
+            return JsonConvert.DeserializeObject<MessageRecievedEventArgs>(mess);
         }
     }
 }

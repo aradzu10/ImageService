@@ -11,19 +11,26 @@ namespace ImageServiceUI.Communication
 {
     public class Client
     {
+        private static int port = 6145;
         private TcpClient client;
-        private int port;
 
-        public Client(int p)
+        public Client()
         {
-            port = p;
             client = new TcpClient();
         }
 
-        public void ConnectToServer()
+        public bool ConnectToServer()
         {
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
-            client.Connect(ep);
+            try
+            {
+                client.Connect(ep);
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+            return true;
         }
 
         public string ReadFromServer()
@@ -60,6 +67,5 @@ namespace ImageServiceUI.Communication
         {
             client.Close();
         }
-
     }
 }

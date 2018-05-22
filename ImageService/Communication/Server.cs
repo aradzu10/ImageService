@@ -1,5 +1,5 @@
 ﻿using ImageService.ListenerManager;
-using Messages;
+using ImageService.Messages;
 using ImageService.Communication.ClientManager;
 using System;
 using System.Collections.Generic;
@@ -26,13 +26,12 @@ namespace ImageService.Communication
             settings = settings_;
             imageListenerManager = imageListenerManager_;
             imageListenerManager.CloseAll += StopServer;
+            IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
+            listener = new TcpListener(ep);
         }
 
         public void Start()
         {
-            IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
-            listener = new TcpListener(ep);
-
             listener.Start();
             Task task = new Task(() => {
                 while (true)
