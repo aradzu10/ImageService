@@ -60,8 +60,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\LogModel.cs" />
     <Compile Include="Model\SettingsModel.cs" />
+    <Compile Include="ViewModel\LogVM.cs" />
     <Compile Include="ViewModel\MainWindowVM.cs" />
+    <Compile Include="ViewModel\SettingsVM.cs" />
     <Compile Include="View\Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
@@ -79,11 +82,10 @@
     </Compile>
     <Compile Include="Communication\Client.cs" />
     <Compile Include="Communication\HandleCommunication.cs" />
-    <Compile Include="DataAnalizer\LogMessage.cs" />
+    <Compile Include="Model\LogMessage.cs" />
     <Compile Include="Messages\MessageRecievedEventArgs.cs" />
     <Compile Include="Messages\MessageTypeEnum.cs" />
     <Compile Include="Messages\Settings.cs" />
-    <Compile Include="DataAnalizer\LogView.cs" />
     <Compile Include="View\Log.xaml.cs">
       <DependentUpon>Log.xaml</DependentUpon>
     </Compile>

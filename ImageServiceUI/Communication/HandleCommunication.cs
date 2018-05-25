@@ -12,7 +12,7 @@ namespace ImageServiceUI.Communication
     {
         private Client client;
         public event EventHandler<MessageRecievedEventArgs> OnLogMessage;
-        public event EventHandler<MessageRecievedEventArgs> OnHandelRemove;
+        public event EventHandler<String> OnHandelRemove;
         public event EventHandler<Settings> SetSettings;
 
         public HandleCommunication()
@@ -35,6 +35,11 @@ namespace ImageServiceUI.Communication
             }
         }
 
+        public void SendMessage(object sender, MessageRecievedEventArgs message)
+        {
+            client.WriteToServer(message.Serialize());
+        }
+
         public void RemoveHandler(string dir)
         {
             MessageRecievedEventArgs message = new MessageRecievedEventArgs(MessageTypeEnum.REMOVE_HANDLER, dir);
@@ -55,7 +60,7 @@ namespace ImageServiceUI.Communication
                     SetSettings?.Invoke(this, settings);
                     break;
                 case MessageTypeEnum.REMOVE_HANDLER:
-                    OnHandelRemove?.Invoke(this, message);
+                    OnHandelRemove?.Invoke(this, message.Message);
                     break;
                 case MessageTypeEnum.L_FAIL:
                 case MessageTypeEnum.L_INFO:

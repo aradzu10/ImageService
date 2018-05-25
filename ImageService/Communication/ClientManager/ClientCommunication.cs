@@ -67,8 +67,7 @@ namespace ImageService.Communication.ClientManager
                 {
                     while (true)
                     {
-                        // check - do command
-                        // when client disconnect
+                        // TODO - when client disconnect
                         string command = reader.ReadLine();
                         MessageRecievedEventArgs message = MessageRecievedEventArgs.Deserialize(command);
                         ClientRequest(message, reader);

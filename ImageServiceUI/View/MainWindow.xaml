@@ -22,10 +22,10 @@
              </Style>
         </Grid.Style>
         <TabControl>
-            <TabItem Header="Settings">
+            <TabItem Header="Settings" Width="60">
                 <local:Settings Width="800" Height="450"/>
             </TabItem>
-            <TabItem Header="Log" Width="59">
+            <TabItem Header="Log" Width="60">
                 <local:Log Width="800" Height="450"/>
             </TabItem>
         </TabControl>

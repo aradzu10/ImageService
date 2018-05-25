@@ -56,7 +56,6 @@ namespace ImageServiceUI.Communication
                 using (NetworkStream stream = client.GetStream())
                 using (StreamWriter writer = new StreamWriter(stream))
                 {
-                    // check - read all object settings
                     writer.WriteLine(line);
                 }
             }

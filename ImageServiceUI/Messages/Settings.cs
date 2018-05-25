@@ -9,31 +9,31 @@ namespace ImageServiceUI.Messages
 {
     public class Settings
     {
-        public string outputPath { get; }
-        public string sourceName { get; }
-        public string logName { get; }
-        public string logPath { get; }
-        public int thumbSize { get; }
-        public List<string> directories { get; }
+        public string OutputPath { get; }
+        public string SourceName { get; }
+        public string LogName { get; }
+        public int ThumbSize { get; }
+        public List<string> Directories { get; }
 
-        public Settings(string outputPath, string sourceName, string logName, string logPath, int thumbSize)
+        public Settings() : this("", "", "", 0) {}
+
+        public Settings(string outputPath, string sourceName, string logName, int thumbSize)
         {
-            this.outputPath = outputPath;
-            this.sourceName = sourceName;
-            this.logName = logName;
-            this.logPath = logPath;
-            this.thumbSize = thumbSize;
-            this.directories = new List<string>();
+            this.OutputPath = outputPath;
+            this.SourceName = sourceName;
+            this.LogName = logName;
+            this.ThumbSize = thumbSize;
+            this.Directories = new List<string>();
         }
 
         public void AddDirectories(string dir)
         {
-            directories.Add(dir);
+            Directories.Add(dir);
         }
 
         public void RemoveDirectories(string dir)
         {
-            directories.Remove(dir);
+            Directories.Remove(dir);
         }
 
         public string Serialize()

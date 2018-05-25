@@ -19,6 +19,15 @@ namespace ImageServiceUI.Model
         {
             handler = new HandleCommunication();
 
+            SettingsModel settingsModel = SettingsModel.Instance;
+            handler.SetSettings += settingsModel.SetSettings;
+            handler.OnHandelRemove += settingsModel.RemoveHandler;
+
+            settingsModel.NotifyHandlerChange += handler.SendMessage;
+
+            LogModel logModel = LogModel.Instance;
+            handler.OnLogMessage += logModel.AddMassage;
+
             //IsConnected = handler.ConnectToServer();
             // TODO - sign to events
             //handler.Communication();
