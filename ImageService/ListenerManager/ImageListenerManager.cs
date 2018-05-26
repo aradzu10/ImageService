@@ -20,7 +20,7 @@ namespace ImageService.ListenerManager
     /// </summary>
     public class ImageListenerManager
     {
-        private ILogger logger;
+        public ILogger Logger { get; private set; }
         private IImageController controller;
         private Dictionary<string, IDirectoryListener> directories;
         private Settings settings;
@@ -33,22 +33,23 @@ namespace ImageService.ListenerManager
         {
             // create controller
             // and check that output dirctory successfully creates
-            logger = logger_;
-            ImageServiceFileHandler imageServiceFile = new ImageServiceFileHandler(outputDir, thumbSize, out ExitCode status);
+            Logger = logger_;
+            settings = Settings.Instance;
+            settings.SetSettings(outputDir, sourceName, logName, thumbSize);
+            ImageServiceFileHandler imageServiceFile = new ImageServiceFileHandler(out ExitCode status);
             controller = new ImageController(imageServiceFile);
             if (status == ExitCode.F_Create_Dir)
             {
-                logger.Log("Cannot create output image folder.\nFatal error cannot recover, exiting",
+                Logger.Log("Cannot create output image folder.\nFatal error cannot recover, exiting",
                     MessageTypeEnum.L_FAIL);
                 Environment.Exit(1);
             }
 
             int port = 6145;
             LogBackup logBackup = LogBackup.Instance;
-            logger.MessageRecieved += logBackup.WriteMessage;
+            Logger.MessageRecieved += logBackup.WriteMessage;
             directories = new Dictionary<string, IDirectoryListener>();
-            settings = new Settings(outputDir, sourceName, logName, thumbSize);
-            server = new Server(port, new ClientHandler(), settings, this);
+            server = new Server(port, new ClientHandler(), this);
         }
 
         /// <summary>
@@ -57,7 +58,7 @@ namespace ImageService.ListenerManager
         /// <param name="directories">all dirs to listen</param>
         public void StartListenDir(string[] directories)
         {
-            logger.Log("Start listening to folders", MessageTypeEnum.L_INFO);
+            Logger.Log("Start listening to folders", MessageTypeEnum.L_INFO);
             foreach (string dir in directories)
             {
                 CreateDirListener(dir);
@@ -73,7 +74,7 @@ namespace ImageService.ListenerManager
         private void CreateDirListener(string dir)
         {
             // check that dir exist
-            IDirectoryListener directoryListener = new ImageDirectoryListener(controller, logger);
+            IDirectoryListener directoryListener = new ImageDirectoryListener(controller, Logger);
             if (directoryListener.StartListenDirectory(dir) == ExitCode.Success)
             {
                 directories[dir] = directoryListener;
@@ -88,7 +89,7 @@ namespace ImageService.ListenerManager
         public void StopListening()
         {
             CloseAll?.Invoke(this, null);
-            logger.Log("Stop listening to all folders", MessageTypeEnum.L_INFO);
+            Logger.Log("Stop listening to all folders", MessageTypeEnum.L_INFO);
         }
 
         public void StopListenToDirectory(object sender, MessageRecievedEventArgs dir)
@@ -101,7 +102,6 @@ namespace ImageService.ListenerManager
             directories.Remove(dir.Message);
             settings.RemoveDirectories(dir.Message);
             RemoveDir?.Invoke(this, dir);
-            logger.Log("Stop listening to: " + dir, MessageTypeEnum.L_INFO); 
         }
 
         public void CloseClient(object sender, System.EventArgs e)

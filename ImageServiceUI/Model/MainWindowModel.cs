@@ -28,9 +28,11 @@ namespace ImageServiceUI.Model
             LogModel logModel = LogModel.Instance;
             handler.OnLogMessage += logModel.AddMassage;
 
-            //IsConnected = handler.ConnectToServer();
-            // TODO - sign to events
-            //handler.Communication();
+            IsConnected = handler.ConnectToServer();
+            new Task(() =>
+            {
+                handler.Communication();
+            }).Start();
         }
 
 

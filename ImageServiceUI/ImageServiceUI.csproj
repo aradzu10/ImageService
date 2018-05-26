@@ -62,6 +62,7 @@
     </ApplicationDefinition>
     <Compile Include="Model\LogModel.cs" />
     <Compile Include="Model\SettingsModel.cs" />
+    <Compile Include="Model\LogTypeBackgroundConverter.cs" />
     <Compile Include="ViewModel\LogVM.cs" />
     <Compile Include="ViewModel\MainWindowVM.cs" />
     <Compile Include="ViewModel\SettingsVM.cs" />

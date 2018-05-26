@@ -10,7 +10,7 @@ namespace ImageServiceUI.Model
     class LogMessage
     {
         private static Dictionary<MessageTypeEnum, string> messages = new Dictionary<MessageTypeEnum, string>()
-        { { MessageTypeEnum.L_FAIL, "ERROR" }, { MessageTypeEnum.L_INFO, "INFO" }, { MessageTypeEnum.L_WARNING, "WARNINGS" } };
+        { { MessageTypeEnum.L_FAIL, " ERROR" }, { MessageTypeEnum.L_INFO, " INFO" }, { MessageTypeEnum.L_WARNING, " WARNING" } };
 
         public string Type { get; private set; }
         public string Message { get; private set; }

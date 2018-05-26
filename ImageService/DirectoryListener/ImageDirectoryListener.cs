@@ -19,7 +19,7 @@ namespace ImageService.DirectoryListener
         private ILogger logger;
         private FileSystemWatcher dirListener;
         private string dirPath;
-        private readonly string[] filters = { ".jpg", ".png", ".gif", ".bmp", ".jepg" };
+        private readonly string[] filters = { ".jpg", ".png", ".gif", ".bmp", ".jpeg" };
 
         /// <summary>
         /// constractor of listener
@@ -65,7 +65,7 @@ namespace ImageService.DirectoryListener
         /// <param name="e">args - not use</param>
         public void StopListenDirectory(object sender, System.EventArgs e)
         {
-            logger.Log("Stop listen to: " + dirPath, MessageTypeEnum.L_INFO);
+            logger.Log("Stop listening to: " + dirPath, MessageTypeEnum.L_INFO);
             dirListener.EnableRaisingEvents = false;
             dirListener.Dispose();
             ((ImageListenerManager)sender).CloseAll -= this.StopListenDirectory;

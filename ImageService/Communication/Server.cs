@@ -16,14 +16,12 @@ namespace ImageService.Communication
         private int port;
         private TcpListener listener;
         private IClientHandler ch;
-        private Settings settings;
         private ImageListenerManager imageListenerManager;
 
-        public Server(int port, IClientHandler ch, Settings settings_, ImageListenerManager imageListenerManager_)
+        public Server(int port, IClientHandler ch, ImageListenerManager imageListenerManager_)
         {
             this.port = port;
             this.ch = ch;
-            settings = settings_;
             imageListenerManager = imageListenerManager_;
             imageListenerManager.CloseAll += StopServer;
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
@@ -41,7 +39,7 @@ namespace ImageService.Communication
                         TcpClient client = listener.AcceptTcpClient();
                         new Task(() =>
                         {
-                            ch.HandleClient(client, settings, imageListenerManager);
+                            ch.HandleClient(client, imageListenerManager);
                         }).Start();
                     }
                     catch (Exception)

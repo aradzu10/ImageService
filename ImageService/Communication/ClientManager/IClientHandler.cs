@@ -11,6 +11,6 @@ namespace ImageService.Communication.ClientManager
 {
     public interface IClientHandler
     {
-        void HandleClient(TcpClient tcpClient, Settings settings, ImageListenerManager imageListenerManager);
+        void HandleClient(TcpClient tcpClient, ImageListenerManager imageListenerManager);
     }
 }

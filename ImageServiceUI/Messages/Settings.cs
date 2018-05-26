@@ -9,21 +9,48 @@ namespace ImageServiceUI.Messages
 {
     public class Settings
     {
-        public string OutputPath { get; }
-        public string SourceName { get; }
-        public string LogName { get; }
-        public int ThumbSize { get; }
-        public List<string> Directories { get; }
+        private static Settings instnace;
 
-        public Settings() : this("", "", "", 0) {}
+        public string OutputPath { get; set; }
+        public string SourceName { get; set; }
+        public string LogName { get; set; }
+        public int ThumbSize { get; set; }
+        public List<string> Directories { get; set; }
 
-        public Settings(string outputPath, string sourceName, string logName, int thumbSize)
+        private Settings()
         {
-            this.OutputPath = outputPath;
-            this.SourceName = sourceName;
-            this.LogName = logName;
-            this.ThumbSize = thumbSize;
-            this.Directories = new List<string>();
+            OutputPath = "";
+            SourceName = "";
+            LogName = "";
+            ThumbSize = -1;
+            Directories = new List<string>();
+        }
+
+        public static Settings Instance
+        {
+            get
+            {
+                if (instnace == null)
+                {
+                    instnace = new Settings();
+                }
+                return instnace;
+            }
+            private set { }
+        }
+
+        public void SetSettings(Settings settings)
+        {
+            SetSettings(settings.OutputPath, settings.SourceName, settings.LogName, settings.ThumbSize);
+            Directories = new List<string>(settings.Directories);
+        }
+
+        public void SetSettings(string outputPath, string sourceName, string logName, int thumbSize)
+        {
+            OutputPath = outputPath;
+            SourceName = sourceName;
+            LogName = logName;
+            ThumbSize = thumbSize;
         }
 
         public void AddDirectories(string dir)
@@ -44,7 +71,6 @@ namespace ImageServiceUI.Messages
         public static Settings Deserialize(string obj)
         {
             return JsonConvert.DeserializeObject<Settings>(obj);
-
         }
     }
 }

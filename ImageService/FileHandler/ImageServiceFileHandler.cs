@@ -1,4 +1,5 @@
 ﻿using ImageService.Enums;
+using ImageService.Messages;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -23,17 +24,18 @@ namespace ImageService.FileHandler
         private int thumbnailSize;  
         private IFileHandler fileHandler;
 
-        public ImageServiceFileHandler(string outputDir, int thumbSize, IFileHandler file_Handler, out ExitCode status)
+        public ImageServiceFileHandler(IFileHandler file_Handler, out ExitCode status)
         {
-            outputFolder = outputDir;
-            thumbnailSize = thumbSize;
+            Settings settings = Settings.Instance;
+            outputFolder = settings.OutputPath;
+            thumbnailSize = settings.ThumbSize;
             fileHandler = file_Handler;
             status = ExitCode.Success;
-            if (!Directory.Exists(outputDir))
+            if (!Directory.Exists(outputFolder))
             {
                 try
                 {
-                    DirectoryInfo di = Directory.CreateDirectory(outputDir);
+                    DirectoryInfo di = Directory.CreateDirectory(outputFolder);
                     di.Attributes = FileAttributes.Directory | FileAttributes.Hidden;
                 }
                 catch (Exception)
@@ -43,8 +45,8 @@ namespace ImageService.FileHandler
             }
         }
 
-        public ImageServiceFileHandler(string outputDir, int thumbSize, out ExitCode status) :
-            this(outputDir, thumbSize, new FileHandler(), out status) { }
+        public ImageServiceFileHandler(out ExitCode status) :
+            this(new FileHandler(), out status) { }
 
         /// <summary>
         /// backup currnt image
@@ -60,8 +62,7 @@ namespace ImageService.FileHandler
                 System.Threading.Thread.Sleep(500);
             }
 
-            DateTime date = GetImageDate(imagePath, out status);
-            if (status != ExitCode.Success) return ExitCode.F_Missing_Date;
+            DateTime date = GetImageDate(imagePath);
 
             string imageName = Path.GetFileName(imagePath);
             string imageDest = outputFolder + "\\" + date.Year + "\\" + date.Month;
@@ -83,7 +84,7 @@ namespace ImageService.FileHandler
             return ExitCode.Success;
         }
 
-        private DateTime GetImageDate(string imagePath, out ExitCode status)
+        private DateTime GetImageDate(string imagePath)
         {
             DateTime date;
             try
@@ -94,14 +95,12 @@ namespace ImageService.FileHandler
                 {
                     PropertyItem propItem = myImage.GetPropertyItem(36867);
                     string dateTaken = r.Replace(Encoding.UTF8.GetString(propItem.Value), "-", 2);
-                    status = ExitCode.Success;
                     date = DateTime.Parse(dateTaken);
                 }
                 return date;
             }
             catch (Exception)
             {
-                status = ExitCode.Failed;
                 return DateTime.Now;
             }
 

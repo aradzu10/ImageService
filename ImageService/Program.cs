@@ -37,8 +37,9 @@ namespace ImageService
             ImageListenerManager listenerManager = new ImageListenerManager(logger, outputFolder,"","", ThumbnailSize);
             string[] folderToListen = (ConfigurationManager.AppSettings.Get("Handler").Split(';'));
             listenerManager.StartListenDir(folderToListen);
-            while (true) { }*/
-            
+            while (true) { }
+            */
+
         }
     }
 }

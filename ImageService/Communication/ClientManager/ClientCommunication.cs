@@ -24,21 +24,21 @@ namespace ImageService.Communication.ClientManager
             client = client_;
         }
 
-        public void StartCommunication(Settings settings)
+        public void StartCommunication()
         {
+            Settings settings = Settings.Instance;
             LogBackup logBackup = LogBackup.Instance;
             try
             {
-                using (NetworkStream stream = client.GetStream())
-                using (StreamWriter writer = new StreamWriter(stream))
-                {
-                    writer.WriteLine(new MessageRecievedEventArgs(MessageTypeEnum.SETTINGS, settings.Serialize()).Serialize());
+                NetworkStream stream = client.GetStream();
+                BinaryWriter writer = new BinaryWriter(stream);
 
-                    foreach (MessageRecievedEventArgs mess in logBackup.messages)
-                    {
-                        writer.WriteLine(mess.Serialize());
-                    }
-                }
+                writer.Write(new MessageRecievedEventArgs(MessageTypeEnum.SETTINGS, settings.Serialize()).Serialize());
+
+                foreach (MessageRecievedEventArgs mess in logBackup.messages)
+                {
+                    writer.Write(mess.Serialize());
+                }                
             }
             catch (Exception) { }
 
@@ -49,11 +49,11 @@ namespace ImageService.Communication.ClientManager
         {
             try
             {
-                using (NetworkStream stream = client.GetStream())
-                using (StreamWriter writer = new StreamWriter(stream))
-                {
-                    writer.WriteLine(e.Serialize());
-                }
+                NetworkStream stream = client.GetStream();
+                BinaryWriter writer = new BinaryWriter(stream);
+
+                writer.Write(e.Serialize());
+                   
             }
             catch (Exception) { }
         }
@@ -62,17 +62,17 @@ namespace ImageService.Communication.ClientManager
         {
             try
             {
-                using (NetworkStream stream = client.GetStream())
-                using (StreamReader reader = new StreamReader(stream))
+                NetworkStream stream = client.GetStream();
+                BinaryReader reader = new BinaryReader(stream);
+
+                while (true)
                 {
-                    while (true)
-                    {
-                        // TODO - when client disconnect
-                        string command = reader.ReadLine();
-                        MessageRecievedEventArgs message = MessageRecievedEventArgs.Deserialize(command);
-                        ClientRequest(message, reader);
-                    }
+                    // TODO - when client disconnect
+                    string command = reader.ReadString();
+                    MessageRecievedEventArgs message = MessageRecievedEventArgs.Deserialize(command);
+                    ClientRequest(message);
                 }
+                   
             }
             catch (Exception)
             {
@@ -80,7 +80,7 @@ namespace ImageService.Communication.ClientManager
             }
         }
 
-        private void ClientRequest(MessageRecievedEventArgs message, StreamReader reader)
+        private void ClientRequest(MessageRecievedEventArgs message)
         {
             switch (message.Status)
             {

@@ -31,7 +31,10 @@ namespace ImageServiceUI.Communication
             {
                 string mess = client.ReadFromServer();
                 MessageRecievedEventArgs message = MessageRecievedEventArgs.Deserialize(mess);
-                HandleMessage(message);
+                if (message != null)
+                {
+                    HandleMessage(message);
+                }
             }
         }
 

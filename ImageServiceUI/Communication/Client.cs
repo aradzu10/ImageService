@@ -26,7 +26,7 @@ namespace ImageServiceUI.Communication
             {
                 client.Connect(ep);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 return false;
             }
@@ -38,12 +38,11 @@ namespace ImageServiceUI.Communication
             string line = "";
             try
             {
-                using (NetworkStream stream = client.GetStream())
-                using (StreamReader reader = new StreamReader(stream))
-                {
-                    // check - read all object settings
-                    line = reader.ReadLine();
-                }
+                NetworkStream stream = client.GetStream();
+                BinaryReader reader = new BinaryReader(stream);
+
+                line = reader.ReadString();
+                
             }
             catch (Exception) {}
             return line;
@@ -53,11 +52,11 @@ namespace ImageServiceUI.Communication
         {
             try
             {
-                using (NetworkStream stream = client.GetStream())
-                using (StreamWriter writer = new StreamWriter(stream))
-                {
-                    writer.WriteLine(line);
-                }
+                NetworkStream stream = client.GetStream();
+                BinaryWriter writer = new BinaryWriter(stream);
+
+                writer.Write(line);
+                
             }
             catch (Exception) { }
         }

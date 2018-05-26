@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,10 +14,11 @@ namespace ImageServiceUI.Model
         private static SettingsModel instance;
         public Settings Settings { get; private set; }
         public event EventHandler<MessageRecievedEventArgs> NotifyHandlerChange;
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private SettingsModel()
         {
-            Settings = new Settings();
+            Settings = Settings.Instance;
         }
 
         public static SettingsModel Instance
@@ -34,12 +36,18 @@ namespace ImageServiceUI.Model
 
         public void SetSettings(object sender, Settings settings)
         {
-            Settings = settings;
+            Settings.SetSettings(settings);
+            OnPropertyChanged("OutputDirectory");
+            OnPropertyChanged("SourceName");
+            OnPropertyChanged("LogName");
+            OnPropertyChanged("ThumbnailSize");
+            OnPropertyChanged("Handlers");
         }
 
         public void RemoveHandler(object sender, String dir)
         {
             Settings.RemoveDirectories(dir);
+            OnPropertyChanged("Handlers");
         }
 
         public void NotifyRemoveHandler(string dir)
@@ -48,29 +56,57 @@ namespace ImageServiceUI.Model
             NotifyHandlerChange?.Invoke(this, messageRecievedEventArgs);
         }
 
-        public String GetOutputDir()
+        public String OutputDir
         {
-            return Settings.OutputPath;
+            get
+            {
+                return Settings.OutputPath;
+            }
+            private set {}
         }
 
-        public String GetLogName()
+        public String LogName
         {
-            return Settings.LogName;
+            get
+            {
+                return Settings.LogName;
+            }
+            private set {}
         }
 
-        public String GetSourcegName()
+        public String SourcegName
         {
-            return Settings.SourceName;
+            get
+            {
+                return Settings.SourceName;
+            }
+            private set {}
         }
 
-        public String GetThumbSize()
+        public String ThumbSize
         {
-            return "" + Settings.ThumbSize;
+            get
+            {
+                if (Settings.ThumbSize != -1)
+                    return "" + Settings.ThumbSize;
+                return "";
+            }
+            private set { }
+            
         }
 
-        public ObservableCollection<string> GetDirectories()
+        public ObservableCollection<string> Directories
         {
-            return new ObservableCollection<string>(Settings.Directories);
+            get
+            {
+                return new ObservableCollection<string>(Settings.Directories);
+            }
+            private set {}
+        }
+
+        private void OnPropertyChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }

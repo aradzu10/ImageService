@@ -3,16 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ImageServiceUI.View"
+             xmlns:convertor="clr-namespace:ImageServiceUI.Model"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-        <Grid Background="White">
-            <Label Content="Log" FontSize="36" FontWeight="Bold" Foreground="#FF2F41B0" RenderTransformOrigin="1.709,2.431" HorizontalAlignment="Center" Canvas.Left="309" VerticalAlignment="Top"/>
-            <DataGrid x:Name="LogGrid" AutoGenerateColumns="False" Margin="10,63,10,10">
-                <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="Type" Width="70" IsReadOnly="True" CanUserResize="False"/>
-                    <DataGridTemplateColumn Header="Message" Width="*" IsReadOnly="True"/>
+    <UserControl.Resources>
+        <convertor:LogTypeBackgroundConverter x:Key="LogTypeBackgroundConverter"/>
+    </UserControl.Resources>
+    <DockPanel ScrollViewer.VerticalScrollBarVisibility="Auto" ScrollViewer.HorizontalScrollBarVisibility="Hidden" Margin="-1,0,0,10">
+        <Label Content="Logs" FontSize="36" HorizontalAlignment="Center" FontWeight="Bold" Foreground="#FF2F41B0" RenderTransformOrigin="2.634,0.921" DockPanel.Dock="Top"/>
+        <DataGrid ItemsSource="{Binding LogMessages}" AutoGenerateColumns="False" CanUserAddRows="False"  VerticalScrollBarVisibility="Auto" 
+                  ScrollViewer.CanContentScroll="True" Width="Auto" Height="Auto" Margin="10,0">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Type" Width="Auto" IsReadOnly="True" Binding="{Binding Path=Type}" >
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="TextBlock">
+                            <Setter Property="Background" Value="{Binding Path=Type, Converter={StaticResource LogTypeBackgroundConverter}}"/>
+                            <Setter Property="TextAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Message" Width="*" IsReadOnly="True" Binding="{Binding Message}" />
             </DataGrid.Columns>
-            </DataGrid>
-        </Grid>
+
+        </DataGrid>
+    </DockPanel>
 </UserControl>

@@ -11,16 +11,7 @@ namespace ImageServiceUI
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainWindowVM();
-            
-            //LogGrid.Items.Add(logMessage);
-            /* 
-            --- client test --- 
-            Client client = new Client(6145);
-            client.ConnectToServer();
-            string obj = client.ReadFromServer();
-            Settings setting = Settings.Deserialize(obj);
-            int x = 5; */
+            DataContext = new MainWindowVM();          
         }
     }
 }

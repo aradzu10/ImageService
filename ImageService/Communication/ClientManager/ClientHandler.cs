@@ -13,14 +13,16 @@ namespace ImageService.Communication.ClientManager
 {
     class ClientHandler : IClientHandler
     {
-        public void HandleClient(TcpClient tcpClient, Settings settings, ImageListenerManager imageListenerManager)
+        public void HandleClient(TcpClient tcpClient, ImageListenerManager imageListenerManager)
         {
             ClientCommunication client = new ClientCommunication(tcpClient);
             client.OnRemoveDir += imageListenerManager.StopListenToDirectory;
             client.OnStop += imageListenerManager.CloseClient;
             imageListenerManager.CloseAll += client.StopCommunication;
             imageListenerManager.RemoveDir += client.WriteMessage;
-            client.StartCommunication(settings);
+            imageListenerManager.Logger.MessageRecieved += client.WriteMessage;
+
+            client.StartCommunication();
             client.UpdatesListner();
         }
     }
