@@ -74,12 +74,17 @@
     </Compile>
     <Compile Include="ListenerManager\ImageListenerManager.cs" />
     <Compile Include="Logger\LogBackup.cs" />
+    <Compile Include="Logger\PhotoUpdater.cs" />
     <Compile Include="Messages\Settings.cs" />
     <Compile Include="Logger\ILogger.cs" />
     <Compile Include="Messages\MessageRecievedEventArgs.cs" />
     <Compile Include="Messages\MessageTypeEnum.cs" />
     <Compile Include="Logger\ServiceLogger.cs" />
     <Compile Include="MyLogger\Logger.cs" />
+    <Compile Include="PhotosHandler\PhotoConverter.cs" />
+    <Compile Include="PhotosHandler\PhotoExtractor.cs" />
+    <Compile Include="PhotosHandler\PhotoList.cs" />
+    <Compile Include="PhotosHandler\PhotoPackage.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs">
       <SubType>Component</SubType>

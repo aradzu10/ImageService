@@ -1,0 +1,16 @@
+C:\Users\user\Documents\Visual Studio 2015\Projects\לימודים\תכנות מתקדם 2\ImageService\ImageService\bin\Debug\ImageService.exe.config
+C:\Users\user\Source\Repos\ImageService\ImageService\bin\Debug\ImageService.exe.config
+C:\Users\Matan\Source\Repos\ImageService\ImageService\obj\Debug\ImageService.ImageService.resources
+C:\Users\Matan\Source\Repos\ImageService\ImageService\obj\Debug\ImageService.ProjectInstaller.resources
+C:\Users\Matan\Source\Repos\ImageService\ImageService\obj\Debug\ImageService.csproj.GenerateResource.Cache
+C:\Users\Matan\Source\Repos\ImageService\ImageService\obj\Debug\ImageService.csproj.CoreCompileInputs.cache
+C:\Users\Matan\Source\Repos\ImageService\ImageService\bin\Debug\ImageService.exe.config
+C:\Users\Matan\Source\Repos\ImageService\ImageService\bin\Debug\ImageService.exe
+C:\Users\Matan\Source\Repos\ImageService\ImageService\bin\Debug\ImageService.pdb
+C:\Users\Matan\Source\Repos\ImageService\ImageService\bin\Debug\Bitbucket.dll
+C:\Users\Matan\Source\Repos\ImageService\ImageService\obj\Debug\ImageService.exe
+C:\Users\Matan\Source\Repos\ImageService\ImageService\obj\Debug\ImageService.pdb
+C:\Users\Matan\Source\Repos\ImageService\ImageService\obj\Debug\ImageService.csproj.CopyComplete
+C:\Users\Matan\Source\Repos\ImageService\ImageService\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Matan\Source\Repos\ImageService\ImageService\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Matan\Source\Repos\ImageService\ImageService\obj\Debug\ImageService.csprojResolveAssemblyReference.cache

@@ -2,7 +2,7 @@
 using ImageService.DirectoryListener;
 using ImageService.FileHandler;
 using ImageService.ListenerManager;
-using Logger;
+using ImageService.Logger;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -15,21 +15,23 @@ namespace ImageService
 {
     static class Program
     {
+        public static object PhotosList { get; private set; }
+
         /// <summary>
         /// The main entry point for the application.
         /// starts the service
         /// </summary>
         static void Main()
         {
-            ServiceBase[] ServicesToRun;
+            /*ServiceBase[] ServicesToRun;
             ServicesToRun = new ServiceBase[]
             {
                 new ImageService()
             };
             ServiceBase.Run(ServicesToRun);
 
-            /* my tests
-            ------------
+             my tests
+            ------------*/
 
             string outputFolder = ConfigurationManager.AppSettings.Get("OutputDir");
             int ThumbnailSize = Int32.Parse(ConfigurationManager.AppSettings.Get("ThumbnailSize"));
@@ -38,7 +40,7 @@ namespace ImageService
             string[] folderToListen = (ConfigurationManager.AppSettings.Get("Handler").Split(';'));
             listenerManager.StartListenDir(folderToListen);
             while (true) { }
-            */
+            
 
         }
     }

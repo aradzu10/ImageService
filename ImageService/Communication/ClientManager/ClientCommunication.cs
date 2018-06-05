@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using ImageService.Logger;
+using System.Drawing;
 
 namespace ImageService.Communication.ClientManager
 {
@@ -17,6 +18,8 @@ namespace ImageService.Communication.ClientManager
     {
         TcpClient client;
         public event EventHandler<MessageRecievedEventArgs> OnRemoveDir;
+        public event EventHandler<MessageRecievedEventArgs> RemovePhoto;
+        public event EventHandler SendAllPhotos;
         public event EventHandler OnStop;
 
         public ClientCommunication(TcpClient client_)
@@ -41,8 +44,6 @@ namespace ImageService.Communication.ClientManager
                 }                
             }
             catch (Exception) { }
-
-
         }
 
         public void WriteMessage(Object sender, MessageRecievedEventArgs e)
@@ -86,6 +87,12 @@ namespace ImageService.Communication.ClientManager
             {
                 case MessageTypeEnum.REMOVE_HANDLER:
                     OnRemoveDir?.Invoke(this, message);
+                    break;
+                case MessageTypeEnum.P_SENDALL:
+                    SendAllPhotos?.Invoke(this, null);
+                    break;
+                case MessageTypeEnum.P_DELETE:
+                    RemovePhoto?.Invoke(this, message);
                     break;
                 default:
                     break;

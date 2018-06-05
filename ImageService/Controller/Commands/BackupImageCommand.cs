@@ -26,9 +26,9 @@ namespace ImageService.Commands
         /// </summary>
         /// <param name="args">args for command</param>
         /// <returns>exit code - if success or were an error</returns>
-        public ExitCode Execute(string[] args)
+        public ExitCode Execute(string[] args, string[] output)
         {
-            return imageFileHandler.BackupImage(args[0]);
+            return imageFileHandler.BackupImage(args[0], output);
         }
     }
 }

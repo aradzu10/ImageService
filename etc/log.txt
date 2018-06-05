@@ -1,0 +1,103 @@
+commit cce2268a547eecc6e5428107cd33ed4dbfa14361
+Author: matan97d <matan97d@gmail.com>
+Date:   Sat May 26 18:09:44 2018 +0300
+
+    Done user interface
+
+commit 23c1f40153cd40d6e9bdbdfa34ec66d97f316db3
+Author: matan97d <matan97d@gmail.com>
+Date:   Fri May 25 18:59:31 2018 +0300
+
+    added ui
+
+commit 1711c5cbf779a89e45bcf86090de609f7e022741
+Author: matan97d <matan97d@gmail.com>
+Date:   Tue May 22 20:05:15 2018 +0300
+
+    to be continue... on thursday
+
+commit 62ad8d13ea01a8fbdf5a47b63f4d0d0e8f708e14
+Author: matan97d <matan97d@gmail.com>
+Date:   Tue May 8 18:00:24 2018 +0300
+
+    client - start
+
+commit a900c0e84e699ca128de7ac6d14b29a57672c98c
+Author: matan97d <matan97d@gmail.com>
+Date:   Tue May 1 23:01:29 2018 +0300
+
+    ex3
+
+commit 1673b2a1ab19ac14155dcb3014123ebf14a05baa
+Merge: 2af05f6 b19049d
+Author: matan97d <matan97d@gmail.com>
+Date:   Tue May 1 13:31:25 2018 +0300
+
+    ex2
+
+commit 2af05f6bd4951c476e32c140192cf4b40172059d
+Author: matan97d <matan97d@gmail.com>
+Date:   Tue May 1 13:14:51 2018 +0300
+
+    start ex2
+
+commit b19049d94ed62d731b53312b84f281d26f6f9e7c
+Author: aradzu10 <aradzulti@gmail.com>
+Date:   Sat Apr 14 18:22:33 2018 +0300
+
+    finished - remain submit form
+
+commit 8d47da09513301bac9d9ead6bce1ba1661d664a8
+Author: aradzu10 <aradzulti@gmail.com>
+Date:   Sat Apr 14 18:19:07 2018 +0300
+
+    done - to submit
+
+commit 2356d4f28c592393b0735b6c83d787f94f2b3199
+Author: aradzu10 <aradzulti@gmail.com>
+Date:   Sat Apr 14 17:58:41 2018 +0300
+
+    done - with comments
+
+commit 99c3ceb16c6a61b78b4b22d841aacd9646449560
+Author: aradzu10 <aradzulti@gmail.com>
+Date:   Sat Apr 14 16:56:49 2018 +0300
+
+    log added
+
+commit 7e7351d91f73967ad0b78993754264bb8adc9ff5
+Author: matan97d <matan97d@gmail.com>
+Date:   Fri Apr 13 18:28:12 2018 +0300
+
+    done
+
+commit 1e3d3447a7a751422bbd14e907787941c761d01e
+Author: matan97d <matan97d@gmail.com>
+Date:   Fri Apr 13 18:00:58 2018 +0300
+
+    done
+
+commit 1de2eda7cfbdfebedd465170c179740834d663f5
+Author: matan97d <matan97d@gmail.com>
+Date:   Thu Apr 12 10:55:59 2018 +0300
+
+    finished part C without thumbnail
+
+commit 1f1bbee5f2fe64037747b7e5fecf5cf36cf3420a
+Author: Matan <matan97d@gmail.com>
+Date:   Tue Apr 10 20:27:02 2018 +0300
+
+    part c - not completed
+
+commit b48adaa81a19f65997fface2167108671944d036
+Author: Matan <matan97d@gmail.com>
+Date:   Tue Apr 10 20:26:45 2018 +0300
+
+    add part c - not completed
+
+commit e072b99cd86c3b2a086f38e6697213cae631399b
+Author: aradzu10 <aradzulti@gmail.com>
+Date:   Mon Apr 2 19:59:05 2018 +0300
+
+    first
+18:19 26/05/2018

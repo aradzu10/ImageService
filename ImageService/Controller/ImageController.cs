@@ -22,10 +22,10 @@ namespace ImageService.Controller
                 { Command.BackupFile, new BackupImageCommand(imageFileHandler) }
             };
         }
-        public ExitCode ExecuteCommand(Command commandID, string[] args)
+        public ExitCode ExecuteCommand(Command commandID, string[] args, string[] output)
         {
             if (commands.ContainsKey(commandID) == false) return ExitCode.Failed;
-            return commands[commandID].Execute(args);
+            return commands[commandID].Execute(args, output);
         }
     }
 }

@@ -16,8 +16,12 @@ namespace ImageService.Communication.ClientManager
         public void HandleClient(TcpClient tcpClient, ImageListenerManager imageListenerManager)
         {
             ClientCommunication client = new ClientCommunication(tcpClient);
+
             client.OnRemoveDir += imageListenerManager.StopListenToDirectory;
+            client.SendAllPhotos += imageListenerManager.SendAllPhotos;
             client.OnStop += imageListenerManager.CloseClient;
+            client.RemovePhoto += imageListenerManager.DeletePhoto;
+
             imageListenerManager.CloseAll += client.StopCommunication;
             imageListenerManager.RemoveDir += client.WriteMessage;
             imageListenerManager.Logger.MessageRecieved += client.WriteMessage;

@@ -60,6 +60,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Messages\MessageRecievedEventArgs.cs" />
+    <Compile Include="Messages\MessageTypeEnum.cs" />
+    <Compile Include="Messages\Settings.cs" />
     <Compile Include="Model\LogModel.cs" />
     <Compile Include="Model\SettingsModel.cs" />
     <Compile Include="Model\LogTypeBackgroundConverter.cs" />
@@ -84,9 +87,6 @@
     <Compile Include="Communication\Client.cs" />
     <Compile Include="Communication\HandleCommunication.cs" />
     <Compile Include="Model\LogMessage.cs" />
-    <Compile Include="Messages\MessageRecievedEventArgs.cs" />
-    <Compile Include="Messages\MessageTypeEnum.cs" />
-    <Compile Include="Messages\Settings.cs" />
     <Compile Include="View\Log.xaml.cs">
       <DependentUpon>Log.xaml</DependentUpon>
     </Compile>

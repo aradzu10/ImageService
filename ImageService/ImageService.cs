@@ -11,7 +11,7 @@ using System.Runtime.InteropServices;
 using ImageService.Messages;
 using System.Configuration;
 using ImageService.ListenerManager;
-using Logger;
+using ImageService.Logger;
 
 public enum ServiceState
 {

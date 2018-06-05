@@ -13,6 +13,9 @@ namespace ImageServiceUI.Messages
         L_WARNING,
         L_FAIL,
         REMOVE_HANDLER,
+        P_SEND,
+        P_SENDALL,
+        P_DELETE,
         UNKNOWN
     }
 }

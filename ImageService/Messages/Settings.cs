@@ -16,6 +16,7 @@ namespace ImageService.Messages
         public string LogName { get; set; }
         public int ThumbSize { get; set; }
         public List<string> Directories { get; set; }
+        public int PicturesCounter { get; set; }
 
         private Settings()
         {
@@ -23,6 +24,7 @@ namespace ImageService.Messages
             SourceName = "";
             LogName = "";
             ThumbSize = -1;
+            PicturesCounter = 0;
             Directories = new List<string>();
         }
 
@@ -41,16 +43,17 @@ namespace ImageService.Messages
 
         public void SetSettings(Settings settings)
         {
-            SetSettings(settings.OutputPath, settings.SourceName, settings.LogName, settings.ThumbSize);
+            SetSettings(settings.OutputPath, settings.SourceName, settings.LogName, settings.ThumbSize, settings.PicturesCounter);
             Directories = new List<string>(settings.Directories); 
         }
 
-        public void SetSettings(string outputPath, string sourceName, string logName, int thumbSize)
+        public void SetSettings(string outputPath, string sourceName, string logName, int thumbSize, int picCounter)
         {
             OutputPath = outputPath;
             SourceName = sourceName;
             LogName = logName;
             ThumbSize = thumbSize;
+            PicturesCounter = picCounter;
         }
 
         public void AddDirectories(string dir)

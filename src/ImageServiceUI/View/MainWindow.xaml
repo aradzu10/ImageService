@@ -1,0 +1,33 @@
+﻿<Window x:Class="ImageServiceUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ImageServiceUI.View"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        mc:Ignorable="d"
+        Title="Image Service User Interface" Height="515" Width="820">
+
+    <Grid>
+        <Grid.Style>
+             <Style TargetType="Grid">
+                 <Setter Property="Background" Value="White" />
+                 <Style.Triggers>
+                     <DataTrigger Binding="{Binding IsConnected}"
+                          Value="False">
+                         <Setter Property="Background" Value="Gray" />
+                     </DataTrigger>
+                 </Style.Triggers>
+             </Style>
+        </Grid.Style>
+        <TabControl>
+            <TabItem Header="Settings" Width="60">
+                <local:Settings Width="800" Height="450"/>
+            </TabItem>
+            <TabItem Header="Log" Width="60">
+                <local:Log Width="800" Height="450"/>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

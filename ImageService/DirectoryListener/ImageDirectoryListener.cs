@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using ImageService.Commands;
 using ImageService.Controller;
-using Logger;
+using ImageService.Logger;
 using ImageService.Messages;
 using System.IO;
 using ImageService.Enums;
 using ImageService.ListenerManager;
+using ImageService.PhotosHandler;
 
 namespace ImageService.DirectoryListener
 {
@@ -17,6 +18,7 @@ namespace ImageService.DirectoryListener
     {
         private IImageController controller;
         private ILogger logger;
+        private ILogger photoUpdate;
         private FileSystemWatcher dirListener;
         private string dirPath;
         private readonly string[] filters = { ".jpg", ".png", ".gif", ".bmp", ".jpeg" };
@@ -26,10 +28,11 @@ namespace ImageService.DirectoryListener
         /// </summary>
         /// <param name="controller_">Image controller</param>
         /// <param name="logger_">Service logger</param>
-        public ImageDirectoryListener(IImageController controller_, ILogger logger_)
+        public ImageDirectoryListener(IImageController controller_, ILogger logger_, ILogger photoUpdate_)
         {
             controller = controller_;
             logger = logger_;
+            photoUpdate = photoUpdate_;
             dirListener = new FileSystemWatcher();
         }
 
@@ -80,25 +83,39 @@ namespace ImageService.DirectoryListener
         {
             // check if file is an image
             // if it is, backup 
+            string path = e.FullPath;
+
             logger.Log("New file detected in \"" + dirPath + "\"", MessageTypeEnum.L_INFO);
-            if (!filters.Contains(Path.GetExtension(e.FullPath)))
+            if (!filters.Contains(Path.GetExtension(path)))
             {
-                logger.Log("File \"" + Path.GetFileName(e.FullPath) + "\" isnt an image",
+                logger.Log("File \"" + Path.GetFileName(path) + "\" isnt an image",
                     MessageTypeEnum.L_INFO);
                 return;
             }
-            logger.Log("Backup \"" + Path.GetFileName(e.FullPath) + "\" is an image",
+            logger.Log("Backup \"" + Path.GetFileName(path) + "\" is an image",
                 MessageTypeEnum.L_INFO);
-            ExitCode status = controller.ExecuteCommand(Command.BackupFile, new string[] { e.FullPath });
+
+            string[] output = { "", "" };
+
+            ExitCode status = controller.ExecuteCommand(Command.BackupFile, new string[] { path }, output);
             if (status != ExitCode.Success)
             {
-                logger.Log("Failed to back up \"" + Path.GetFileName(e.FullPath) + "\" reson of failuer: " +
+                logger.Log("Failed to back up \"" + Path.GetFileName(path) + "\" reson of failuer: " +
                     GetFailedReson(status), MessageTypeEnum.L_FAIL);
             }
             else
             {
-                logger.Log("Successfully Backup \"" + Path.GetFileName(e.FullPath) + "\" and created thumbnail",
+                logger.Log("Successfully Backup \"" + Path.GetFileName(path) + "\" and created thumbnail",
                     MessageTypeEnum.L_INFO);
+
+                MessageRecievedEventArgs message = PhotoExtractor.GetPhotos(output[0], output[1]);
+                if (message != null)
+                {
+                    photoUpdate.Log(message.Message, message.Status);
+                }
+
+                Settings settings = Settings.Instance;
+                settings.PicturesCounter++;
             }
 
         }

@@ -48,12 +48,17 @@ namespace ImageService.FileHandler
         public ImageServiceFileHandler(out ExitCode status) :
             this(new FileHandler(), out status) { }
 
+        public ExitCode DeleteFile(string path)
+        {
+            return fileHandler.DeleteFile(path);
+        }
+
         /// <summary>
         /// backup currnt image
         /// </summary>
         /// <param name="imagePath">image</param>
         /// <returns>if success or the reson of failuer</returns>
-        public ExitCode BackupImage(string imagePath)
+        public ExitCode BackupImage(string imagePath, string[] finalPath)
         {
             // make sure file aint lock
             ExitCode status;
@@ -67,6 +72,9 @@ namespace ImageService.FileHandler
             string imageName = Path.GetFileName(imagePath);
             string imageDest = outputFolder + "\\" + date.Year + "\\" + date.Month;
             string imageThumbDest = outputFolder + "\\Thumbnails\\" + date.Year + "\\" + date.Month;
+
+            finalPath[0] = imageDest + "\\" + imageName;
+            finalPath[1] = imageThumbDest + "\\" + imageName;
 
             status = fileHandler.CreateDir(imageDest);
             if (status != ExitCode.Success) return ExitCode.F_Create_Dir;

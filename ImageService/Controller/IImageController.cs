@@ -10,6 +10,6 @@ namespace ImageService.Controller
 {
     public interface IImageController
     {
-        ExitCode ExecuteCommand(Command commandID, string[] args);          // Executing the Command Requet
+        ExitCode ExecuteCommand(Command commandID, string[] args, string[] output);          // Executing the Command Requet
     }
 }

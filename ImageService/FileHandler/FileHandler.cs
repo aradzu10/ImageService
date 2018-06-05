@@ -123,5 +123,18 @@ namespace ImageService.FileHandler
                 image?.Dispose();
             }
         }
+
+        public ExitCode DeleteFile(string path)
+        {
+            try
+            {
+                File.Delete(path);
+                return ExitCode.Success;
+            }
+            catch (Exception)
+            {
+                return ExitCode.Failed;
+            }
+        }
     }
 }

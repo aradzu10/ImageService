@@ -1,7 +1,6 @@
 C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\bin\Debug\ImageServiceUI.exe.config
 C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\bin\Debug\ImageServiceUI.exe
 C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\bin\Debug\ImageServiceUI.pdb
-C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\ImageServiceUI.csprojResolveAssemblyReference.cache
 C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\App.g.cs
 C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\ImageServiceUI_MarkupCompile.cache
 C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\ImageServiceUI_MarkupCompile.lref
@@ -22,3 +21,4 @@ C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\View\Log.baml
 C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\View\Settings.g.cs
 C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\View\Settings.baml
 C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\bin\Debug\Commands.dll
+C:\Users\Matan\Source\Repos\ImageService\ImageServiceUI\obj\Debug\ImageServiceUI.csprojAssemblyReference.cache

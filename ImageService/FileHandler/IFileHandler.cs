@@ -20,5 +20,7 @@ namespace ImageService.FileHandler
         Image CreateThumbnail(string imagePath, int size, out ExitCode status);
 
         ExitCode SaveImage(string path, Image image);
+
+        ExitCode DeleteFile(string path);
     }
 }

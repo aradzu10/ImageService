@@ -12,6 +12,6 @@ namespace ImageService.Commands
     /// </summary>
     public interface ICommand
     {
-        ExitCode Execute(string[] args);
+        ExitCode Execute(string[] args, string[] output);
     }
 }
