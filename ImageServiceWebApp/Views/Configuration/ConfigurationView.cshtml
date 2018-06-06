@@ -1,0 +1,73 @@
+﻿@model ImageServiceWebApp.Models.ConfigurationModel
+
+@{
+    ViewBag.Title = "ConfigurationView";
+}
+
+<h2>Configuration</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Config Settings</h4>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <table class="table">
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.OutputDir)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.OutputDir)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.SourceName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.SourceName)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.LogName)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.LogName)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.ThumbSize)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.ThumbSize)
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    @Html.LabelFor(model => model.Directories)
+                </td>
+                <td></td>
+            </tr>
+            @foreach (var item in Model.Directories)
+            {
+            <tr>
+
+                <td>
+                    @Html.ActionLink(@item, "DeleteHandler", "Confirm", new { selectedHandler = item })
+                </td>
+                <td></td>
+
+            </tr>
+            }
+
+
+        </table>
+
+
+    </div>
+}

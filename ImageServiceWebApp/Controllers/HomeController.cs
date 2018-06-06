@@ -15,17 +15,17 @@ namespace ImageServiceWebApp.Controllers
         {
             model = new HomeModel();
 
-            model.NotifyEvent += ImageWeb;
+            model.notify += Notify;
         }
 
-        // GET: ImageView
-        //public ActionResult ImageWeb(object sender, EventArgs e)
-        public void ImageWeb(object sender, EventArgs e)
+        public void Notify()
         {
-            ViewBag.NumOfPics = model.NumOfPics;
-            ViewBag.IsConnected = model.IsConnected;
+            HomeView();
+        }
 
-            //return View(ImageViewInfoObj);
+        public ActionResult HomeView()
+        {
+            return View(model);
         }
     }
 }

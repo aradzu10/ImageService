@@ -9,6 +9,9 @@ namespace ImageServiceWebApp.Models
 {
     public class ConfigurationModel
     {
+        public delegate void NotifyEvent();
+        public NotifyEvent notify;
+
         private Settings settings;
         public event EventHandler<MessageRecievedEventArgs> NotifyHandlerChange;
 
@@ -52,7 +55,7 @@ namespace ImageServiceWebApp.Models
         [Required]
         [DataType(DataType.Text)]
         [Display(Name = "Source Name")]
-        public String SourcegName
+        public String SourceName
         {
             get
             {
@@ -69,7 +72,7 @@ namespace ImageServiceWebApp.Models
             {
                 if (settings.ThumbSize != -1)
                     return "" + settings.ThumbSize;
-                return "";
+                return "2";
             }
             private set { }
 
@@ -86,16 +89,18 @@ namespace ImageServiceWebApp.Models
             private set { }
         }
 
-        private ConfigurationModel() { }
+        private ConfigurationModel() { settings = Settings.Instance; }
 
         public void SetSettings(object sender, Settings settings)
         {
             settings.SetSettings(settings);
+            notify?.Invoke();
         }
 
         public void RemoveHandler(object sender, String dir)
         {
             settings.RemoveDirectories(dir);
+            notify?.Invoke();
         }
 
         public void NotifyRemoveHandler(string dir)

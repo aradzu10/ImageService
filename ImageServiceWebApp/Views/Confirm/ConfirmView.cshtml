@@ -1,0 +1,26 @@
+﻿@model ImageServiceWebApp.Models.ConfirmModel
+
+@{
+    ViewBag.Title = "ConfirmView";
+}
+
+<h2>Confirm</h2>
+
+<h3>Are you sure you want to delete the handler?</h3>
+
+@Html.ActionLink("OK", "Delete");
+@Html.ActionLink("Cancel", "Cancel");
+
+<!--
+<button type="button" id="btnOK" style="margin:10px">OK</button>
+<button type="button" id="btnCancel" style="margin:10px">Cancel</button>
+<script>
+    $("#btnOK").click(function () {
+        $.post("@Url.Action("Delete")");
+    });
+
+    $("#btnCancel").click(function () {
+        $.post("@Url.Action("Cancel")");
+    })
+</script>
+    -->

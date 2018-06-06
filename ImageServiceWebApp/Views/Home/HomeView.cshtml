@@ -6,8 +6,14 @@
 
 <h2>Image View</h2>
 
-<h3>Server status: @ViewBag.IsConnected</h3>
-<h4>Number of pictures backed up: @ViewBag.NumOfPics</h4>
+<br /><br />
+<br />
+
+<h4>@Html.DisplayNameFor(model => model.IsConnected): @Html.DisplayFor(model => model.IsConnected)</h4>
+<h4>@Html.DisplayNameFor(model => model.NumOfPics): @Html.DisplayFor(model => model.NumOfPics)</h4>
+
+<br /><br />
+<br />
 
 
 <table class="table">
@@ -21,7 +27,6 @@
         <th>
             @Html.DisplayNameFor(model => model.Students[0].ID)
         </th>
-        <th></th>
     </tr>
 
     @foreach (var item in Model.Students)
@@ -38,5 +43,4 @@
             </td>
         </tr>
     }
-
 </table>

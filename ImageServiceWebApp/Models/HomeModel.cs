@@ -11,11 +11,25 @@ namespace ImageServiceWebApp.Models
 {
     public class HomeModel
     {
-        public event EventHandler NotifyEvent;
+        public delegate void NotifyEvent();
+        public NotifyEvent notify;
 
+        private bool isConnected;
         [Required]
-        [Display(Name = "Is Connected")]
-        public bool IsConnected { get; set; }
+        [DataType(DataType.Text)]
+        [Display(Name = "Server Status")]
+        public string IsConnected
+        {
+            get
+            {
+                if (isConnected)
+                {
+                    return "Connected";
+                }
+                return "Not Connected";
+            }
+            private set { }
+        }
 
         [Required]
         [Display(Name = "Number of pictures backed up")]
@@ -43,15 +57,15 @@ namespace ImageServiceWebApp.Models
 
         public HomeModel()
         {
-            HandleCommunication handler = new HandleCommunication();
+            //HandleCommunication handler = new HandleCommunication();
 
             //handler.ConnectToServer();
 
-            ConfigurationModel settingsModel = ConfigurationModel.Instance;
-            handler.SetSettings += settingsModel.SetSettings;
-            handler.OnHandelRemove += settingsModel.RemoveHandler;
+            //ConfigurationModel settingsModel = ConfigurationModel.Instance;
+            //handler.SetSettings += settingsModel.SetSettings;
+            //handler.OnHandelRemove += settingsModel.RemoveHandler;
 
-            settingsModel.NotifyHandlerChange += handler.SendMessage;
+            //settingsModel.NotifyHandlerChange += handler.SendMessage;
 
             // TODO - sign to events in client (log and photos)
 
@@ -61,17 +75,20 @@ namespace ImageServiceWebApp.Models
             //    handler.Communication();
             //}).Start();
 
+            isConnected = true;
+            NumOfPics = 0;
+
             Students = new List<Student>();
             Students.Add(new Student() { FirstName = "Matan", LastName = "Dombelski", ID = "318439981" });
             Students.Add(new Student() { FirstName = "Arad", LastName = "Zulti", ID = "315240564" });
 
-            NotifyEvent?.Invoke(this, null);
+            notify?.Invoke();
         }
 
         public void SetNumOfPics(object sender, Settings settings)
         {
             NumOfPics = settings.PicturesCounter;
-            NotifyEvent?.Invoke(this, null);
+            notify?.Invoke();
         }
     }
 }

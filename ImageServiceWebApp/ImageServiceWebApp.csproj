@@ -145,10 +145,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Start\BundleConfig.cs" />
-    <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ConfigurationController.cs" />
+    <Compile Include="Controllers\ConfirmController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\PhotosController.cs" />
     <Compile Include="Models\Communication\Client.cs" />
@@ -158,6 +157,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ConfigurationModel.cs" />
+    <Compile Include="Models\ConfirmModel.cs" />
     <Compile Include="Models\HomeModel.cs" />
     <Compile Include="Models\LogModel.cs" />
     <Compile Include="Models\Messages\MessageRecievedEventArgs.cs" />
@@ -206,10 +206,9 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\HomeView.cshtml" />
+    <Content Include="Views\Home\HomeView.cshtml" />
+    <Content Include="Views\Configuration\ConfigurationView.cshtml" />
+    <Content Include="Views\Confirm\ConfirmView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
