@@ -9,12 +9,10 @@ namespace ImageServiceWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private HomeModel model;
+        private static HomeModel model = new HomeModel();
 
         public HomeController()
         {
-            model = new HomeModel();
-
             model.notify += Notify;
         }
 

@@ -9,12 +9,9 @@ namespace ImageServiceWebApp.Controllers
 {
     public class ConfirmController : Controller
     {
-        private ConfirmModel model;
+        private static ConfirmModel model = new ConfirmModel();
 
-        public ConfirmController()
-        {
-            model = new ConfirmModel();
-        }
+        public ConfirmController() { }
 
         public ActionResult ConfirmView()
         {

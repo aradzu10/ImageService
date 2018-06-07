@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ImageService.PhotosHandler
 {
-    class PhotoList
+    public class PhotoList
     {
         public List<PhotoPackage> Photos { get; set; }
 

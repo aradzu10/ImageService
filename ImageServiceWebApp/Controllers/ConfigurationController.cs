@@ -8,12 +8,10 @@ namespace ImageServiceWebApp.Models
 {
     public class ConfigurationController : Controller
     {
-        private ConfigurationModel model;
+        private static ConfigurationModel model = ConfigurationModel.Instance;
 
         public ConfigurationController()
         {
-            model = ConfigurationModel.Instance;
-
             model.notify += Notify;
         }
 
@@ -31,12 +29,12 @@ namespace ImageServiceWebApp.Models
         {
             model.NotifyRemoveHandler(toDelete);
 
-            return RedirectToAction("ConfigView");
+            return RedirectToAction("ConfigurationView");
         }
 
         public ActionResult DeleteCancel()
         {
-            return RedirectToAction("ConfigView");
+            return RedirectToAction("ConfigurationView");
         }
     }
 }

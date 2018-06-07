@@ -4,14 +4,13 @@
     ViewBag.Title = "ConfigurationView";
 }
 
-<h2>Configuration</h2>
+<h2>Configuration Settings</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Config Settings</h4>
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <table class="table">
             <tr>
@@ -58,7 +57,7 @@
             <tr>
 
                 <td>
-                    @Html.ActionLink(@item, "DeleteHandler", "Confirm", new { selectedHandler = item })
+                    @Html.ActionLink(@item, "DeleteHandler", "Confirm", new { selectedHandler = item }, null)
                 </td>
                 <td></td>
 

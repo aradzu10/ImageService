@@ -1,0 +1,14 @@
+﻿@model ImageServiceWebApp.Models.ViewPhotoModel
+
+@{
+    ViewBag.Title = "ViewPhotoView";
+}
+
+<p>Name: @Model.selectedPhoto.GetPhotoName()</p>
+<p>
+    Date: @Model.selectedPhoto.GetPhotoDate().Month/@Model.selectedPhoto.GetPhotoDate().Year
+    <a href="@Url.Action("DeletePhoto", "DeletePhoto", new { photoRelPath = Model.selectedPhoto})" id="btnDelete" class="btn btn-danger btn-xs" role="button">Delete</a>
+</p>
+
+<img src="data:image/Bmp;base64,@Model.selectedPhoto.GetPhoto()">
+

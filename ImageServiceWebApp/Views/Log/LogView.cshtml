@@ -1,0 +1,53 @@
+﻿@using ImageServiceWebApp.Models.Messages
+@model ImageServiceWebApp.Models.LogModel
+
+@{
+    ViewBag.Title = "LogView";
+}
+
+<h2>Log Messages</h2>
+
+<div>
+    @using (Html.BeginForm("LogChangeFilter", "Log", FormMethod.Post))
+    {
+
+        <div>
+            <br />
+            @Html.DropDownList("typeFilter",
+                             new SelectList(LogMessage.messages.Values),
+                             "All",
+                             new { @class = "form-control" })
+            <br />
+
+            <input type="submit" id="submitId" value="Filter" class="btn-group-lg" />
+
+        </div>
+
+    }
+
+</div>
+
+<br/>
+
+<table class="table">
+    <tr>
+        <th width="20%">
+            @Html.DisplayNameFor(model => model.SelectedLogMessages[0].Type)
+        </th>
+        <th width="80%">
+            @Html.DisplayNameFor(model => model.SelectedLogMessages[0].Message)
+        </th>
+    </tr>
+        @foreach (var item in Model.SelectedLogMessages)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Type)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Message)
+            </td>
+        </tr>
+    }
+
+</table>

@@ -57,25 +57,29 @@ namespace ImageServiceWebApp.Models
 
         public HomeModel()
         {
-            //HandleCommunication handler = new HandleCommunication();
+            HandleCommunication handler = new HandleCommunication();
 
-            //handler.ConnectToServer();
+            isConnected = handler.ConnectToServer();
 
-            //ConfigurationModel settingsModel = ConfigurationModel.Instance;
-            //handler.SetSettings += settingsModel.SetSettings;
-            //handler.OnHandelRemove += settingsModel.RemoveHandler;
+            ConfigurationModel settingsModel = ConfigurationModel.Instance;
+            handler.SetSettings += settingsModel.SetSettings;
+            handler.OnHandelRemove += settingsModel.RemoveHandler;
 
-            //settingsModel.NotifyHandlerChange += handler.SendMessage;
+            settingsModel.NotifyHandlerChange += handler.SendMessage;
 
-            // TODO - sign to events in client (log and photos)
+            LogModel logModel = LogModel.Instance;
+            handler.OnLogMessage += logModel.AddMassage;
 
-            //IsConnected = handler.ConnectToServer();
-            //new Task(() =>
-            //{
-            //    handler.Communication();
-            //}).Start();
+            PhotosModel photosModel = PhotosModel.Instance;
+            handler.GetPhotos += photosModel.HandlePhoto;
 
-            isConnected = true;
+            photosModel.NotifyPhotoChange += handler.SendMessage;
+
+            new Task(() =>
+            {
+                handler.Communication();
+            }).Start();
+
             NumOfPics = 0;
 
             Students = new List<Student>();

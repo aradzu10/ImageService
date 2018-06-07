@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ImageService.PhotosHandler
 {
-    class PhotoExtractor
+    public class PhotoExtractor
     {
         public static MessageRecievedEventArgs GetAllPhotos()
         {

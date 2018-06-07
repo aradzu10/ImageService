@@ -147,6 +147,8 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ConfigurationController.cs" />
+    <Compile Include="Controllers\DeletePhotoController.cs" />
+    <Compile Include="Controllers\ViewPhotoController.cs" />
     <Compile Include="Controllers\ConfirmController.cs" />
     <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\PhotosController.cs" />
@@ -157,8 +159,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ConfigurationModel.cs" />
+    <Compile Include="Models\ViewPhotoModel.cs" />
+    <Compile Include="Models\DeletePhotoModel.cs" />
     <Compile Include="Models\ConfirmModel.cs" />
     <Compile Include="Models\HomeModel.cs" />
+    <Compile Include="Models\Messages\LogMessage.cs" />
     <Compile Include="Models\LogModel.cs" />
     <Compile Include="Models\Messages\MessageRecievedEventArgs.cs" />
     <Compile Include="Models\Messages\MessageTypeEnum.cs" />
@@ -209,6 +214,10 @@
     <Content Include="Views\Home\HomeView.cshtml" />
     <Content Include="Views\Configuration\ConfigurationView.cshtml" />
     <Content Include="Views\Confirm\ConfirmView.cshtml" />
+    <Content Include="Views\Log\LogView.cshtml" />
+    <Content Include="Views\Photos\PhotosView.cshtml" />
+    <Content Include="Views\DeletePhoto\DeletePhotoView.cshtml" />
+    <Content Include="Views\ViewPhoto\ViewPhotoView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

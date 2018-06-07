@@ -72,7 +72,7 @@ namespace ImageServiceWebApp.Models
             {
                 if (settings.ThumbSize != -1)
                     return "" + settings.ThumbSize;
-                return "2";
+                return "";
             }
             private set { }
 
@@ -89,7 +89,9 @@ namespace ImageServiceWebApp.Models
             private set { }
         }
 
-        private ConfigurationModel() { settings = Settings.Instance; }
+        private ConfigurationModel() {
+            settings = Settings.Instance;
+        }
 
         public void SetSettings(object sender, Settings settings)
         {

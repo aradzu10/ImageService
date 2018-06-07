@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ImageServiceUI.Model
 {
-    class LogMessage
+    public class LogMessage
     {
         private static Dictionary<MessageTypeEnum, string> messages = new Dictionary<MessageTypeEnum, string>()
         { { MessageTypeEnum.L_FAIL, " ERROR" }, { MessageTypeEnum.L_INFO, " INFO" }, { MessageTypeEnum.L_WARNING, " WARNING" } };
