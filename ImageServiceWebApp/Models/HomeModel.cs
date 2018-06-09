@@ -11,9 +11,6 @@ namespace ImageServiceWebApp.Models
 {
     public class HomeModel
     {
-        public delegate void NotifyEvent();
-        public NotifyEvent notify;
-
         private bool isConnected;
         [Required]
         [DataType(DataType.Text)]
@@ -33,7 +30,14 @@ namespace ImageServiceWebApp.Models
 
         [Required]
         [Display(Name = "Number of pictures backed up")]
-        public int NumOfPics { get; set; }
+        public int NumOfPics
+        {
+            get
+            {
+                return Settings.Instance.PicturesCounter;
+            }
+            private set { }
+        }
 
         [Required]
         [DataType(DataType.Text)]
@@ -60,6 +64,7 @@ namespace ImageServiceWebApp.Models
             HandleCommunication handler = new HandleCommunication();
 
             isConnected = handler.ConnectToServer();
+            if (!isConnected) return;
 
             ConfigurationModel settingsModel = ConfigurationModel.Instance;
             handler.SetSettings += settingsModel.SetSettings;
@@ -72,6 +77,7 @@ namespace ImageServiceWebApp.Models
 
             PhotosModel photosModel = PhotosModel.Instance;
             handler.GetPhotos += photosModel.HandlePhoto;
+            handler.OnDeletePhoto += photosModel.DeletePhoto;
 
             photosModel.NotifyPhotoChange += handler.SendMessage;
 
@@ -80,19 +86,16 @@ namespace ImageServiceWebApp.Models
                 handler.Communication();
             }).Start();
 
-            NumOfPics = 0;
+            handler.SendMessage(this, new MessageRecievedEventArgs(MessageTypeEnum.P_SENDALL, ""));
 
             Students = new List<Student>();
             Students.Add(new Student() { FirstName = "Matan", LastName = "Dombelski", ID = "318439981" });
             Students.Add(new Student() { FirstName = "Arad", LastName = "Zulti", ID = "315240564" });
-
-            notify?.Invoke();
         }
 
         public void SetNumOfPics(object sender, Settings settings)
         {
             NumOfPics = settings.PicturesCounter;
-            notify?.Invoke();
         }
     }
 }

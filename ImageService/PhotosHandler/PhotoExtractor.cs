@@ -29,8 +29,7 @@ namespace ImageService.PhotosHandler
 
             foreach (var thumbPath in thumbnailsPath)
             {
-                Image image;
-                Image imageThumb;
+                Image image = null, imageThumb = null;
 
                 int index = thumbPath.IndexOf("\\Thumbnails");
                 string imagePath = (index < 0) ? thumbPath : thumbPath.Remove(index, "\\Thumbnails".Length);
@@ -46,6 +45,9 @@ namespace ImageService.PhotosHandler
                 }
 
                 photos.Photos.Add(new PhotoPackage(imagePath, thumbPath, image, imageThumb));
+
+                image?.Dispose();
+                imageThumb?.Dispose();
             }
 
             message.Message = photos.Serialize();

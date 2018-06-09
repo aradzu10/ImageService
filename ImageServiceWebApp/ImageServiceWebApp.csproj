@@ -159,6 +159,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ConfigurationModel.cs" />
+    <Compile Include="Models\PhotosHandler\PhotoDB.cs" />
     <Compile Include="Models\ViewPhotoModel.cs" />
     <Compile Include="Models\DeletePhotoModel.cs" />
     <Compile Include="Models\ConfirmModel.cs" />

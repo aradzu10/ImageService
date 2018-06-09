@@ -9,9 +9,6 @@ namespace ImageServiceWebApp.Models
 {
     public class ConfigurationModel
     {
-        public delegate void NotifyEvent();
-        public NotifyEvent notify;
-
         private Settings settings;
         public event EventHandler<MessageRecievedEventArgs> NotifyHandlerChange;
 
@@ -93,16 +90,14 @@ namespace ImageServiceWebApp.Models
             settings = Settings.Instance;
         }
 
-        public void SetSettings(object sender, Settings settings)
+        public void SetSettings(object sender, Settings settings_)
         {
-            settings.SetSettings(settings);
-            notify?.Invoke();
+            settings.SetSettings(settings_);
         }
 
         public void RemoveHandler(object sender, String dir)
         {
             settings.RemoveDirectories(dir);
-            notify?.Invoke();
         }
 
         public void NotifyRemoveHandler(string dir)

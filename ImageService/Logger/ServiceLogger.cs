@@ -15,5 +15,10 @@ namespace ImageService.Logger
         {
             MessageRecieved?.Invoke(this, new MessageRecievedEventArgs(type, message));
         }
+
+        public void Log(MessageRecievedEventArgs message)
+        {
+            MessageRecieved?.Invoke(this, message);
+        }
     }
 }

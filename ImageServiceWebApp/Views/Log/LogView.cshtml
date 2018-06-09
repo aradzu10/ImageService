@@ -6,6 +6,7 @@
 }
 
 <h2>Log Messages</h2>
+<br />
 
 <div>
     @using (Html.BeginForm("LogChangeFilter", "Log", FormMethod.Post))
@@ -27,7 +28,8 @@
 
 </div>
 
-<br/>
+<br /><br />
+
 
 <table class="table">
     <tr>
@@ -38,8 +40,8 @@
             @Html.DisplayNameFor(model => model.SelectedLogMessages[0].Message)
         </th>
     </tr>
-        @foreach (var item in Model.SelectedLogMessages)
-        {
+    @foreach (var item in Model.SelectedLogMessages)
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.Type)

@@ -4,25 +4,28 @@
     ViewBag.Title = "Home";
 }
 
-<h2>Image View</h2>
+<h2>Image Service</h2>
 
-<br /><br />
 <br />
 
-<h4>@Html.DisplayNameFor(model => model.IsConnected): @Html.DisplayFor(model => model.IsConnected)</h4>
-<h4>@Html.DisplayNameFor(model => model.NumOfPics): @Html.DisplayFor(model => model.NumOfPics)</h4>
+<h4>
+    @Html.DisplayNameFor(model => model.IsConnected):  
+    @Html.DisplayFor(model => model.IsConnected)
+</h4>
+<h4>
+    @Html.DisplayNameFor(model => model.NumOfPics):  
+    @Html.DisplayFor(model => model.NumOfPics)
+</h4>
 
-<br /><br />
 <br />
-
 
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.Students[0].FirstName)
+            @Html.DisplayNameFor(model => model.Students[0].LastName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Students[0].LastName)
+            @Html.DisplayNameFor(model => model.Students[0].FirstName)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Students[0].ID)
@@ -33,10 +36,10 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.FirstName)
+                @Html.DisplayFor(modelItem => item.LastName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.LastName)
+                @Html.DisplayFor(modelItem => item.FirstName)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.ID)

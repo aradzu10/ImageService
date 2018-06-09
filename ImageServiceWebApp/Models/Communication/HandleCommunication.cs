@@ -14,6 +14,7 @@ namespace ImageServiceWebApp.Models.Communication
         private Client client;
         public event EventHandler<MessageRecievedEventArgs> OnLogMessage;
         public event EventHandler<String> OnHandelRemove;
+        public event EventHandler<PhotoPackage> OnDeletePhoto;
         public event EventHandler<Settings> SetSettings;
         public event EventHandler<MessageRecievedEventArgs> GetPhotos;
 
@@ -63,6 +64,10 @@ namespace ImageServiceWebApp.Models.Communication
                 case MessageTypeEnum.P_SEND:
                 case MessageTypeEnum.P_SENDALL:
                     GetPhotos?.Invoke(this, message);
+                    break;
+                case MessageTypeEnum.P_DELETE:
+                    PhotoPackage photo = PhotoPackage.Deserialize(message.Message);
+                    OnDeletePhoto(this, photo);
                     break;
                 case MessageTypeEnum.SETTINGS:
                     Settings settings = Settings.Deserialize(message.Message);

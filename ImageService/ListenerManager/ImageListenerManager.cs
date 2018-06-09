@@ -107,8 +107,12 @@ namespace ImageService.ListenerManager
         public void DeletePhoto(object sender, MessageRecievedEventArgs message)
         {
             PhotoPackage photo = PhotoPackage.Deserialize(message.Message);
-            ImageServiceFile.DeleteFile(photo.PhotoPath);
-            ImageServiceFile.DeleteFile(photo.PhotoThumbnailPath);
+
+            if (ImageServiceFile.DeleteFile(photo.PhotoPath) == ExitCode.Success &&
+            ImageServiceFile.DeleteFile(photo.PhotoThumbnailPath) == ExitCode.Success)
+            {
+                PhotoUpdate.Log(message);
+            }
         }
 
         public void StopListenToDirectory(object sender, MessageRecievedEventArgs dir)

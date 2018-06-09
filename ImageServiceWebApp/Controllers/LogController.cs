@@ -12,16 +12,7 @@ namespace ImageServiceWebApp.Controllers
     {
         private static LogModel model = LogModel.Instance;
 
-        public LogController()
-        {
-            model.notify += Notify;
-        }
-
-        public void Notify()
-        {
-            LogMessageUpdate(model.lastType);
-            LogView();
-        }
+        public LogController() { }
 
         public ActionResult LogView()
         {

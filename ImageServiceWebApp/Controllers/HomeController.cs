@@ -11,15 +11,7 @@ namespace ImageServiceWebApp.Controllers
     {
         private static HomeModel model = new HomeModel();
 
-        public HomeController()
-        {
-            model.notify += Notify;
-        }
-
-        public void Notify()
-        {
-            HomeView();
-        }
+        public HomeController() { }
 
         public ActionResult HomeView()
         {

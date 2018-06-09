@@ -1,21 +1,28 @@
-﻿@model ImageServiceWebApp.Models.PhotosModel
+﻿@using ImageServiceWebApp.Models.PhotosHandler
+@using ImageServiceWebApp.Models.Messages
+
+@model ImageServiceWebApp.Models.PhotosModel
 
 @{
     ViewBag.Title = "PhotosView";
 }
 
 <h2>Photos</h2>
+<br />
+<br />
 
-@foreach (var item in Model.photoList.Photos)
+@foreach (var item in PhotoDB.Instance.photoList.Photos)
 {
     <div class="col-xs-18 col-sm-6 col-md-3">
         <div class="thumbnail">
-            <img src="data:image/Bmp;base64,@item.GetPhotoThumbnail()" alt="" class="img-circle" width="242" height="200">
+            <img src="data:image/Bmp;base64,@item.GetPhotoThumbnail()" alt="" class="img-circle" width="@Settings.Instance.ThumbSize" height="@Settings.Instance.ThumbSize">
             <div class="caption">
                 <h4>@item.GetPhotoName()</h4>
-                <p>year: @item.GetPhotoDate().Year Month:@item.GetPhotoDate().Month</p>
-                <p><a href="@Url.Action("ViewPhoto", "ViewPhoto", new { selectedPhoto = item.Serialize()})" id="btnView" class="btn btn-info btn-xs" role="button">View</a>
-                <a href="@Url.Action("DeletePhoto", "DeletePhoto", new { selectedPhoto = item.Serialize()})" id="btnDelete" class="btn btn-danger btn-xs" role="button">Delete</a></p>
+                <p>year: @item.GetPhotoDate().Year</p><p>Month: @item.GetPhotoDate().Month</p>
+            <p>
+                <a href="@Url.Action("ViewPhoto", "ViewPhoto", new { selectedPhoto = PhotoDB.GetIndex(item)})" id="btnView" class="btn btn-info btn-xs" role="button">View</a>
+                <a href="@Url.Action("DeletePhoto", "DeletePhoto", new { selectedPhoto = PhotoDB.GetIndex(item)})" id="btnDelete" class="btn btn-danger btn-xs" role="button">Delete</a>
+            </p>
             </div>
         </div>
     </div>

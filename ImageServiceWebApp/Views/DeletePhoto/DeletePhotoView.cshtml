@@ -1,4 +1,6 @@
-﻿@model ImageServiceWebApp.Models.DeletePhotoModel
+﻿@using ImageServiceWebApp.Models.Messages
+
+@model ImageServiceWebApp.Models.DeletePhotoModel
 
 @{
     ViewBag.Title = "DeletePhotoView";
@@ -11,9 +13,11 @@
 <h4>Name: @Model.selectedPhoto.GetPhotoName()</h4>
 <h4>Date: @Model.selectedPhoto.GetPhotoDate().Month/@Model.selectedPhoto.GetPhotoDate().Year</h4>
 
-<img src="data:image/Bmp;base64,@Model.selectedPhoto.GetPhotoThumbnail()">
+<img src="data:image/Bmp;base64,@Model.selectedPhoto.GetPhotoThumbnail()" width="@Settings.Instance.ThumbSize" height="@Settings.Instance.ThumbSize">
 <br />
 <br />
 
-<p><a href="@Url.Action("Cancel")" class="btn btn-info btn-xs" role="button">No</a>
-    <a href="@Url.Action("Delete")" class="btn btn-danger btn-xs" role="button">Yes</a></p>
+<p>
+    <a href="@Url.Action("Delete")" class="btn btn-danger btn-xs" role="button">Delete</a>
+    <a href="@Url.Action("Cancel")" class="btn btn-info btn-xs" role="button">Cancel</a>
+</p>

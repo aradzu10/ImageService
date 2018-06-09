@@ -19,16 +19,15 @@ namespace ImageServiceWebApp.Controllers
             return View(model);
         }
 
-        public ActionResult DeletePhoto(string selectedPhoto)
+        public ActionResult DeletePhoto(int selectedPhoto)
         {
-            PhotoPackage photo = PhotoPackage.Deserialize(selectedPhoto);
-            model.selectedPhoto = photo;
+            model.selectedPhoto = PhotoDB.GetPhoto(selectedPhoto);
             return RedirectToAction("DeletePhotoView");
         }
 
         public ActionResult Delete()
         {
-            return RedirectToAction("DeleteConfirm", "Photos", new { toDelete = model.selectedPhoto.Serialize() });
+            return RedirectToAction("DeleteConfirm", "Photos", new { toDelete = PhotoDB.GetIndex(model.selectedPhoto) });
         }
 
         public ActionResult Cancel()

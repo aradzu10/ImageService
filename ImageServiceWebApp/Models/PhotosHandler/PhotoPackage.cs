@@ -18,6 +18,8 @@ namespace ImageServiceWebApp.Models.PhotosHandler
         public byte[] Photo { get; set; }
         public byte[] PhotoThumbnail { get; set; }
 
+        public PhotoPackage() { }
+
         public PhotoPackage(string photoPath, string photoThumbnailPath, Image photo, Image photoThumb)
         {
             PhotoPath = photoPath;

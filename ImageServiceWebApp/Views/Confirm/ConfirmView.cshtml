@@ -6,10 +6,10 @@
 
 <h2>Confirm</h2>
 
-<h3>Are you sure you want to delete @Html.DisplayFor(model => model.SelectedHandler)</h3>
+<h3>Are you sure you want to delete @Html.DisplayFor(model => model.SelectedHandler)?</h3>
 
-@Html.ActionLink("OK", "Delete");
-@Html.ActionLink("Cancel", "Cancel");
+<a href="@Url.Action("Delete")" class="btn btn-info btn-xs" role="button">Delete</a>
+<a href="@Url.Action("Cancel")" class="btn btn-danger btn-xs" role="button">Cancel</a>
 
 <!--
 <button type="button" id="btnOK" style="margin:10px">OK</button>

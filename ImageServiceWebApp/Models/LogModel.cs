@@ -8,9 +8,6 @@ namespace ImageServiceWebApp.Models
 {
     public class LogModel
     {
-        public delegate void NotifyEvent();
-        public NotifyEvent notify;
-
         public string lastType { get; set; }
         private static LogModel instance;
         public List<LogMessage> logMessages { get; private set; }
@@ -19,7 +16,7 @@ namespace ImageServiceWebApp.Models
         {
             get
             {
-                if (selectedLogMessages.Count == 0)
+                if (selectedLogMessages.Count == 0 && lastType == "")
                 {
                     selectedLogMessages.AddRange(logMessages);
                 }
@@ -33,9 +30,6 @@ namespace ImageServiceWebApp.Models
             logMessages = new List<LogMessage>();
             selectedLogMessages = new List<LogMessage>();
             lastType = "";
-            logMessages.Add(new LogMessage(MessageTypeEnum.L_FAIL,"fail"));
-            logMessages.Add(new LogMessage(MessageTypeEnum.L_INFO,"info"));
-            logMessages.Add(new LogMessage(MessageTypeEnum.L_WARNING,"warning"));
         }
 
         public void AddToSelected(LogMessage message)
@@ -59,7 +53,6 @@ namespace ImageServiceWebApp.Models
         public void AddMassage(object sender, MessageRecievedEventArgs message)
         {
             logMessages.Add(new LogMessage(message));
-            notify?.Invoke();
         }
     }
 }

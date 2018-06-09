@@ -6,6 +6,9 @@
 
 <h2>Configuration Settings</h2>
 
+<br/>
+<br />
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -14,7 +17,7 @@
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <table class="table">
             <tr>
-                <td>
+                <td width="20%">
                     @Html.LabelFor(model => model.OutputDir)
                 </td>
                 <td>
@@ -50,19 +53,22 @@
                 <td>
                     @Html.LabelFor(model => model.Directories)
                 </td>
-                <td></td>
-            </tr>
-            @foreach (var item in Model.Directories)
-            {
-            <tr>
-
                 <td>
-                    @Html.ActionLink(@item, "DeleteHandler", "Confirm", new { selectedHandler = item }, null)
-                </td>
-                <td></td>
+                    <table>
+                        @foreach (var item in Model.Directories)
+                        {
+                            <tr>
 
+                                <td>
+                                    @Html.ActionLink(@item, "DeleteHandler", "Confirm", new { selectedHandler = item }, null)
+                                </td>
+                            </tr>
+                        }
+                    </table>
+
+                </td>
             </tr>
-            }
+
 
 
         </table>
